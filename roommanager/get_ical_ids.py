@@ -15,9 +15,9 @@ def download_icals():
     ical_site= str(ical_site.content)
     UIDs = re.findall('[0-9]{7}', ical_site)
     if len(os.listdir(download_path) ) == 0:
-        var = "i"
+        var = ""
     else:
-        var = ''
+        var = 'i'
     for ids in UIDs:
         index += 1 #Starts with 1
         download_url = download_path + var + str(index) + '.ical'
