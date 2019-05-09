@@ -6,12 +6,13 @@ from roommanager.dbaccess import add_rooms
 
 download_path = os.path.dirname(os.path.realpath(__file__)) + "\icals\\"
 def download_icals():
+
     index = 0
     ical_site = requests.get("https://vorlesungsplan.dhbw-mannheim.de/ical.php")
     ical_site= str(ical_site.content)
     UIDs = re.findall('[0-9]{7}', ical_site)
     for ids in UIDs:
-        index += 1 #Name of first I cal 1.cal
+        index += 1 #Starts with 1
         download_url = download_path + "i" + str(index) + '.ical'
         url = "http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=" + ids
         if(len(download_path)) != len(UIDs):
