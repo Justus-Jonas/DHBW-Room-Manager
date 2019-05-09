@@ -31,7 +31,7 @@ print(str(allUIDs))
 """
 
 download_path = os.path.dirname(os.path.realpath(__file__)) + "\icals\\"
-def down_icals():
+def download_icals():
     index = 0
     ical_site = requests.get("https://vorlesungsplan.dhbw-mannheim.de/ical.php")
     ical_site= str(ical_site.content)
@@ -53,8 +53,7 @@ def down_icals():
 d = []
 def analyse_icals():
     num_files = len([f for f in os.listdir(download_path)if os.path.isfile(os.path.join(download_path, f))])
-    for x in range(1, 3):
-        print(x)
+    for x in range(1, 8):
         ical_name = download_path + str(x) + ".ical"
         #print(file_name)
         read_ical = open(ical_name, "rb")
@@ -68,14 +67,13 @@ def analyse_icals():
                 startdt = event.get('dtstart').dt
                 enddt = event.get('dtend').dt
                 exdate = event.get('exdate')
-                #print("Datum: {0} Zeitraum:{1}-{2} {3}\n".format(startdt.strftime("%m/%d/%Y"), startdt.strftime(" %H:%M "), enddt.strftime(" %H:%M "), location))
-                print(location)
+                #print ("Datum: {0} Zeitraum:{1}-{2} {3}\n".format(startdt.strftime("%m/%d/%Y"), startdt.strftime(" %H:%M "), enddt.strftime(" %H:%M "), location))
                 location = location.replace("\'", '')
                 location = location.replace("vText(b", '')
                 if location not in event_json:
                     event_json[location] = []
                 else:
-                    event_json[location].append(startdt.strftime("%m/%d/%Y"))
+                    event_json[location].append([startdt.strftime("%m/%d/%Y"), startdt.strftime("%H:%M"), enddt.strftime("%H:%M")])
 
             read_ical.close()
         print(event_json)
@@ -83,7 +81,6 @@ def analyse_icals():
 
 
         #print(content)
-
 
 analyse_icals()
 """
