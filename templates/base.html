@@ -9,7 +9,7 @@
       {% if user.is_authenticated %}
         <a href="{% url 'logout' %}">Abmelden</a>
       {% else %}
-        <a href="{% url 'login' %}">Anmelden</a> / <a href="{% url 'sign' %}">Regestrieren</a>
+        <a href="{% url 'login' %}">Anmelden</a> / <a href="{% url 'sign' %}">Registrieren</a>
       {% endif %}
       <hr>
     </header>
