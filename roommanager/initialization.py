@@ -16,3 +16,6 @@ def startup():
                 slotid INTEGER,
                 FOREIGN KEY(slotid) REFERENCES slots(slotid)
               )''')
+
+    conn.commit()
+    conn.close()
