@@ -5,15 +5,22 @@ import icalendar
 from roommanager.dbaccess import add_rooms
 
 download_path = os.path.dirname(os.path.realpath(__file__)) + "\icals\\"
+
+
 def download_icals():
 
+
     index = 0
     ical_site = requests.get("https://vorlesungsplan.dhbw-mannheim.de/ical.php")
     ical_site= str(ical_site.content)
     UIDs = re.findall('[0-9]{7}', ical_site)
+    if len(os.listdir(download_path) ) == 0:
+        var = "i"
+    else:
+        var = ''
     for ids in UIDs:
         index += 1 #Starts with 1
-        download_url = download_path + "i" + str(index) + '.ical'
+        download_url = download_path + var + str(index) + '.ical'
         url = "http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=" + ids
         if(len(download_path)) != len(UIDs):
             ical = requests.get(url)
@@ -21,22 +28,6 @@ def download_icals():
                 f.write(ical.content)
     return index
 
-
-def download_update_icals():
-    prefix = "i"
-    index = 0
-    ical_site = requests.get("https://vorlesungsplan.dhbw-mannheim.de/ical.php")
-    ical_site= str(ical_site.content)
-    UIDs = re.findall('[0-9]{7}', ical_site)
-    for ids in UIDs:
-        index += 1
-        download_url = download_path + prefix + str(index) + '.ical'
-        url = "http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=" + ids
-        if(len(download_path)) != len(UIDs):
-            ical = requests.get(url)
-            with open(download_url, 'wb') as f:
-                f.write(ical.content)
-    return index
 
 
 def analyse_icals(range1, range2, filenameflag):
@@ -77,9 +68,8 @@ def analyse_icals(range1, range2, filenameflag):
         return event_json
 
 
-def update_icals():
-    length = 284
-    for x in range(1, length):
+def update_icals(i):
+    for x in range(1,i):
         old_ical = download_path + str(x) + ".ical"
         new_ical = download_path + "i" + str(x) + ".ical"
         try:
@@ -90,7 +80,7 @@ def update_icals():
             old_content = open(old_ical, "rb")
         except FileNotFoundError:
             #Update
-            event_json = analyse_icals(x, length, "first")
+            event_json = analyse_icals(x, i, "first")
             add_rooms(event_json)
             continue
 
