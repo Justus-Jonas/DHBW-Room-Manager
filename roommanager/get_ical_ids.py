@@ -59,6 +59,7 @@ def analyse_icals():
         read_ical = open(ical_name, "rb")
         content = icalendar.Calendar.from_ical(read_ical.read())
         event_json = { }
+        date_set = {}
         for event in content.walk():
             if event.name == "VEVENT":
                 summary = event.get('summary')
@@ -70,13 +71,19 @@ def analyse_icals():
                 #print ("Datum: {0} Zeitraum:{1}-{2} {3}\n".format(startdt.strftime("%m/%d/%Y"), startdt.strftime(" %H:%M "), enddt.strftime(" %H:%M "), location))
                 location = location.replace("\'", '')
                 location = location.replace("vText(b", '')
+                date_temp = str(startdt.strftime("%m/%d/%Y"))
                 if location not in event_json:
                     event_json[location] = []
+                if date_temp not in date_set:
+                    date_set[date_temp] = []
+
                 else:
-                    event_json[location].append([startdt.strftime("%m/%d/%Y"), startdt.strftime("%H:%M"), enddt.strftime("%H:%M")])
+                    date_set[date_temp].append([startdt.strftime("%H:%M"), enddt.strftime("%H:%M")])
+                    event_json[location].append(date_set)
 
             read_ical.close()
         print(event_json)
+        #print(date_set)
 
 
 
