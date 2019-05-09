@@ -8,7 +8,7 @@ from roommanager import get_ical_ids
 
 def download_and_analyse():
     i = get_ical_ids.download_update_icals()
-    get_ical_ids.analyse_icals(1, i, "new")
+    get_ical_ids.update_icals()
 
 
 @login_required(login_url='login/')
