@@ -2,7 +2,7 @@ import requests
 import re
 import os
 import icalendar
-from dbacess import add_rooms
+from roommanager.dbaccess import add_rooms
 
 download_path = os.path.dirname(os.path.realpath(__file__)) + "\icals\\"
 def download_icals():
