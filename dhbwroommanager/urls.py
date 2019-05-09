@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from roommanager.views import sign, main
+from roommanager.initialization import startup
 from django.contrib.auth.views import auth_login, auth_logout
 from django.contrib.auth import views as auth_views
 
@@ -28,3 +29,5 @@ urlpatterns = [
     path('sign/', sign, name='sign'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout')
 ]
+
+startup()
