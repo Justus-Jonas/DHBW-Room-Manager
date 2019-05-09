@@ -2,7 +2,7 @@ import requests
 import re
 import os
 import icalendar
-
+from dbacess import add_rooms
 
 download_path = os.path.dirname(os.path.realpath(__file__)) + "\icals\\"
 def download_icals():
@@ -11,12 +11,9 @@ def download_icals():
     ical_site= str(ical_site.content)
     UIDs = re.findall('[0-9]{7}', ical_site)
     for ids in UIDs:
-        print(ids)
-        index += 1
-        print(index)
+        index += 1 #Name of first I cal 1.cal
         download_url = download_path + "i" + str(index) + '.ical'
         url = "http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=" + ids
-        print(url)
         if(len(download_path)) != len(UIDs):
             ical = requests.get(url)
             with open(download_url, 'wb') as f:
@@ -31,12 +28,9 @@ def download_update_icals():
     ical_site= str(ical_site.content)
     UIDs = re.findall('[0-9]{7}', ical_site)
     for ids in UIDs:
-        print(ids)
         index += 1
-        print(index)
         download_url = download_path + prefix + str(index) + '.ical'
         url = "http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=" + ids
-        print(url)
         if(len(download_path)) != len(UIDs):
             ical = requests.get(url)
             with open(download_url, 'wb') as f:
@@ -47,7 +41,7 @@ def download_update_icals():
 def analyse_icals(range1, range2, filenameflag):
     num_files = len([f for f in os.listdir(download_path)if os.path.isfile(os.path.join(download_path, f))])
     for x in range(range1, range2):
-        if filenameflag == 'old':
+        if filenameflag == 'first':
             filename = download_path + str(x) + ".ical"
         else:
             filename = download_path + "i" + str(x) + ".ical"
@@ -65,7 +59,6 @@ def analyse_icals(range1, range2, filenameflag):
                 startdt = event.get('dtstart').dt
                 enddt = event.get('dtend').dt
                 exdate = event.get('exdate')
-                #print ("Datum: {0} Zeitraum:{1}-{2} {3}\n".format(startdt.strftime("%m/%d/%Y"), startdt.strftime(" %H:%M "), enddt.strftime(" %H:%M "), location))
                 location = location.replace("\'", '')
                 location = location.replace("vText(b", '')
                 date_temp = str(startdt.strftime("%m/%d/%Y"))
@@ -81,7 +74,6 @@ def analyse_icals(range1, range2, filenameflag):
             read_ical.close()
         #print(event_json)
         return event_json
-        #print(date_set)
 
 
 def update_icals():
@@ -89,19 +81,35 @@ def update_icals():
     for x in range(1, length):
         old_ical = download_path + str(x) + ".ical"
         new_ical = download_path + "i" + str(x) + ".ical"
-        old_content = open(old_ical, "rb")
-        new_content = open(new_ical, "rb")
+        try:
+            new_content = open(new_ical, "rb")
+        except FileNotFoundError:
+            continue
+        try:
+            old_content = open(old_ical, "rb")
+        except FileNotFoundError:
+            #Update
+            event_json = analyse_icals(x, length, "first")
+            add_rooms(event_json)
+            continue
+
+        #Merge
+        exit_loops = False
         for line_old in old_content:
             for line_new in new_content:
                 if line_new != line_old:
-                    old_dict = analyse_icals(x, x + 1, "old")
+                    old_dict = analyse_icals(x, x + 1, "first")
                     #print(old_dict)
                     new_dict = analyse_icals(x, x +1, "new")
                     #print(new_dict)
                     compare_dict(old_dict, new_dict)
+                    exit_loops = True
                     break
                 else:
                     print("okay")
+            if exit_loops:
+                break
+
 
 
 def compare_dict(old_dict, new_dict):
@@ -111,6 +119,5 @@ def compare_dict(old_dict, new_dict):
     new_val = oldd_keys - newd_keys
     rem_val = newd_keys - oldd_keys
     mod_val = { i : (old_dict[i], new_dict[i]) for i in intersect_keys if old_dict[i] != new_dict[i]}
-    #print(mod_val)
 update_icals()
 
