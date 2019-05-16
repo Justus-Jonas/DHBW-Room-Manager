@@ -110,5 +110,5 @@ def compare_dict(old_dict, new_dict):
     new_val = oldd_keys - newd_keys
     rem_val = newd_keys - oldd_keys
     mod_val = { i : (old_dict[i], new_dict[i]) for i in intersect_keys if old_dict[i] != new_dict[i]}
-update_icals()
+    update_icals()
 
