@@ -2,7 +2,9 @@ import requests
 import re
 import os
 import icalendar
-from roommanager.dbaccess import add_rooms
+from roommanager import dbaccess
+#from roommanager import models
+#from roommanager.models import Slots, Rooms
 
 download_path = os.path.dirname(os.path.realpath(__file__)) + "\icals\\"
 
@@ -31,7 +33,7 @@ def download_icals():
 
 
 def analyse_icals(range1, range2, filenameflag):
-    num_files = len([f for f in os.listdir(download_path)if os.path.isfile(os.path.join(download_path, f))])
+    #num_files = len([f for f in os.listdir(download_path)if os.path.isfile(os.path.join(download_path, f))])
     for x in range(range1, range2):
         if filenameflag == 'first':
             filename = download_path + str(x) + ".ical"
@@ -41,7 +43,7 @@ def analyse_icals(range1, range2, filenameflag):
         #print(file_name)
         read_ical = open(ical_name, "rb")
         content = icalendar.Calendar.from_ical(read_ical.read())
-        event_json = { }
+        event_json = {}
         date_set = {}
         for event in content.walk():
             if event.name == "VEVENT":
@@ -64,7 +66,7 @@ def analyse_icals(range1, range2, filenameflag):
                     event_json[location].append(date_set)
 
             read_ical.close()
-        #print(event_json)
+        print(event_json)
         return event_json
 
 
@@ -110,5 +112,8 @@ def compare_dict(old_dict, new_dict):
     new_val = oldd_keys - newd_keys
     rem_val = newd_keys - oldd_keys
     mod_val = { i : (old_dict[i], new_dict[i]) for i in intersect_keys if old_dict[i] != new_dict[i]}
-update_icals()
+p =  analyse_icals(1, 284, "first")
+#add_rooms(p)
+
+
 
