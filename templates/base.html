@@ -13,19 +13,19 @@
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">
-          <img src="http://placehold.it/150x50?text=Logo" alt="">
+          <img src="https://upload.wikimedia.org/wikipedia/de/archive/1/1d/20110626153129%21DHBW-Logo.svg" alt="" style="width:128px;height:50px;">
         </a>
-  <a class="navbar-brand" href="{% url 'main' %}">DHBW Room Manager</a>
+  <a class="navbar-brand" href="{% url 'main' %}"> Room Manager</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       {% if user.is_authenticated %}
-          <a class="nav-item nav-link" href="{% url 'logout' %}">Abmelden</a>
+          <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
       {% else %}
-          <a class="nav-item nav-link " href="{% url 'login' %}">Anmelden</a>
-          <a class="nav-item nav-link" href="{% url 'sign' %}">Registrieren</a>
+          <a class="nav-item nav-link " href="{% url 'login' %}">Login</a>
+          <a class="nav-item nav-link" href="{% url 'sign' %}">Sign Up</a>
       {% endif %}
     </div>
   </div>
