@@ -1,3 +1,10 @@
 from django.db import models
 
-# Create your models here.
+class Slots(models.Model):
+    starttime = models.TimeField()
+    endtime = models.TimeField()
+
+class Rooms(models.Model):
+    room = models.CharField(max_length=100)
+    date = models.DateField()
+    slotid = models.ForeignKey(Slots, on_delete=models.CASCADE)

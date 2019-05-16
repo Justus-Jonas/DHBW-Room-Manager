@@ -117,3 +117,5 @@ dmypy.json
 # ide specific
 .idea/*
 *.pyc
+
+roommanager/migrations/*
