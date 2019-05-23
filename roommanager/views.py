@@ -6,10 +6,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from roommanager import get_ical_ids
 
+from django.db import models
 def download_and_analyse():
     i = get_ical_ids.download_icals()
-    get_ical_ids.update_icals(i)
-
+    event_json = get_ical_ids.update_icals(i)
+    dbaccess.add_rooms(event_json)
 
 @login_required(login_url='login/')
 def main(request):
