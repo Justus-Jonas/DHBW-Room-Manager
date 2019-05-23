@@ -2,8 +2,8 @@ import requests
 import re
 import os
 import icalendar
-from roommanager.dbaccess import add_rooms
-
+import datetime
+#from roommanager.dbaccess import add_rooms
 download_path = os.path.dirname(os.path.realpath(__file__)) + "\icals\\"
 
 
@@ -31,7 +31,7 @@ def download_icals():
 
 
 def analyse_icals(range1, range2, filenameflag):
-    num_files = len([f for f in os.listdir(download_path)if os.path.isfile(os.path.join(download_path, f))])
+    #num_files = len([f for f in os.listdir(download_path)if os.path.isfile(os.path.join(download_path, f))])
     for x in range(range1, range2):
         if filenameflag == 'first':
             filename = download_path + str(x) + ".ical"
@@ -53,7 +53,7 @@ def analyse_icals(range1, range2, filenameflag):
                 exdate = event.get('exdate')
                 location = location.replace("\'", '')
                 location = location.replace("vText(b", '')
-                date_temp = str(startdt.strftime("%m/%d/%Y"))
+                date_temp = str(startdt.strftime("%Y-%m-%d"))
                 if location not in event_json:
                     event_json[location] = []
                 if date_temp not in date_set:
@@ -110,5 +110,13 @@ def compare_dict(old_dict, new_dict):
     new_val = oldd_keys - newd_keys
     rem_val = newd_keys - oldd_keys
     mod_val = { i : (old_dict[i], new_dict[i]) for i in intersect_keys if old_dict[i] != new_dict[i]}
-update_icals()
+
+
+
+def current_date():
+    date = datetime.datetime.now()
+    date = date.strftime("%Y-%m-%d")
+    print(date)
+
+current_date()
 
