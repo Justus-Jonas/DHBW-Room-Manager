@@ -4,27 +4,31 @@ import os
 import icalendar
 import datetime
 #from roommanager.dbaccess import add_rooms
-download_path = os.path.dirname(os.path.realpath(__file__)) + "\icals\\"
+download_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "icals")
 
 
 def download_icals():
-
-
     index = 0
     ical_site = requests.get("https://vorlesungsplan.dhbw-mannheim.de/ical.php")
     ical_site= str(ical_site.content)
     UIDs = re.findall('[0-9]{7}', ical_site)
-    if len(os.listdir(download_path) ) == 0:
-        var = ""
-    else:
-        var = 'i'
+
+    try:
+        if len(os.listdir(download_path) ) == 0:
+            var = ""
+        else:
+            var = 'i'
+    except FileNotFoundError:
+        os.mkdir(download_path)
+
     for ids in UIDs:
         index += 1 #Starts with 1
-        download_url = download_path + var + str(index) + '.ical'
+        download_url = os.path.join(download_path, var + str(index) + '.ical')
         url = "http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=" + ids
         if(len(download_path)) != len(UIDs):
             ical = requests.get(url)
             with open(download_url, 'wb') as f:
+                print("download: " + download_url + " -> " + download_path)
                 f.write(ical.content)
     return index
 
