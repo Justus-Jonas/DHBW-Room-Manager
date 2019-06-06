@@ -36,6 +36,7 @@ def retrieve_actual_date(request):
     date = datetime.datetime.now()
     cur_date = date.strftime("%Y-%m-%d")
     room = Rooms.objects.filter(room="Raum 117D", date=cur_date)
+
     room_dict = {'information': room}
     return render(request, 'actualdate.html', room_dict)
 

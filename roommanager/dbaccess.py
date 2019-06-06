@@ -16,7 +16,6 @@ def add_rooms(event_json):
                         saveslots.endtime = '00:00'
                     else:
                         saveslots.endtime = end_time
-                    #saveslots.numb = i
                     saveslots.save()
                     saverooms = Rooms()
                     saverooms.room = room
