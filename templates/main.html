@@ -3,23 +3,35 @@
 {% block content %}
     {% load static %}
     <div style="text-align: center">
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <img src="/static/img/C-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline-block;position:relative;top:2px" width="596" height="879">
-  <a xlink:href="https://de.wikipedia.org/wiki/George_Washington">
-    <rect x="300" y="125" fill="#fff" opacity="0.5" width="250" height="300" />
-  </a>
-  <a xlink:href="https://de.wikipedia.org/wiki/Thomas_Jefferson">
-    <rect x="550" y="225" fill="#fff" opacity="0.5" width="200" height="300" />
-  </a>
-  <a xlink:href="https://de.wikipedia.org/wiki/Theodore_Roosevelt">
-    <rect x="750" y="375" fill="#fff" opacity="0.5" width="200" height="300" />
-  </a>
-  <a xlink:href="https://de.wikipedia.org/wiki/Abraham_Lincoln">
-    <rect x="999" y="375" fill="#fff" opacity="0.5" width="200" height="300" />
-  </a>
-</svg>
-    <img src="/static/img/B-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline-block;position:relative;top:15px" width="596" height="879">
+  <img src="/static/img/C-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline-block;position:relative;top:2px" width="596" height="879" usemap="#image-map">
+        <img src="/static/img/B-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline-block;position:relative;top:2px" height="879" usemap="#image-map2">
 
-
+        <map name="image-map">
+    <area target="" alt="67C" title="67C" href="#" coords="104,69,192,252" shape="rect">
+    <area target="" alt="68C" title="68C" href="#" coords="174,393,104,254" shape="rect">
+    <area target="" alt="69C" title="69C" href="#" coords="104,394,175,533" shape="rect">
+    <area target="" alt="70C" title="70C" href="#" coords="104,533,176,629" shape="rect">
+    <area target="" alt="50B" title="50B" href="#" coords="259,651,428,725" shape="rect">
+    <area target="" alt="51B" title="51B" href="#" coords="429,649,594,727" shape="rect">
+    <area target="" alt="49B" title="49B" href="#" coords="407,826,261,749" shape="rect">
+    <area target="" alt="48B" title="48B" href="#" coords="408,752,544,822" shape="rect">
+    <area target="" alt="47B" title="47B" href="#" coords="592,825,545,751" shape="rect">
+    <area target="" alt="66C" title="66C" href="#" coords="77,208,2,66" shape="rect">
+    <area target="" alt="65C" title="65C" href="#" coords="77,347,5,210" shape="rect">
+    <area target="" alt="64C" title="64C" href="#" coords="78,488,3,347" shape="rect">
+    <area target="" alt="63C" title="63C" href="#" coords="77,626,4,490" shape="rect">
+</map>
+<map name="image-map2">
+    <area target="" alt="36B" title="36B" href="" coords="158,244,69,58" shape="rect">
+    <area target="" alt="35B" title="35B" href="" coords="86,248,158,385" shape="0">
+    <area target="" alt="34B" title="34B" href="" coords="159,526,85,388" shape="0">
+    <area target="" alt="33B" title="33B" href="" coords="87,531,159,621" shape="0">
+    <area target="" alt="32B" title="32B" href="" coords="111,625,158,669" shape="0">
+    <area target="" alt="37B" title="37B" href="" coords="186,57,257,196" shape="0">
+    <area target="" alt="38B" title="38B" href="" coords="258,338,185,200" shape="0">
+    <area target="" alt="39B" title="39B" href="" coords="186,342,260,479" shape="0">
+    <area target="" alt="40B" title="40B" href="" coords="258,623,187,483" shape="0">
+    <area target="" alt="41B" title="41B" href="" coords="187,625,257,762" shape="0">
+</map>
     </div>
 {% endblock %}
