@@ -28,63 +28,78 @@ def download_icals():
         if(len(download_path)) != len(UIDs):
             ical = requests.get(url)
             with open(download_url, 'wb') as f:
-                print("download: " + download_url + " -> " + download_path)
+                print("download: " + url + " -> " + download_url)
                 f.write(ical.content)
     return index
 
 
+def analyse_ical_event(event_json, event):
+    location = event.get('location')
+    if location == '':
+        return
+
+    summary = event.get('summary')
+    # description = event.get('description')
+    startdt = event.get('dtstart').dt
+    enddt = event.get('dtend').dt
+    # exdate = event.get('exdate')
+    location = location.replace("\'", '')
+    location = location.replace("vText(b", '')
+    date = str(startdt.strftime("%Y-%m-%d"))
+
+    if location not in event_json:
+        event_json[location] = {}
+
+    timespan = (startdt.strftime("%H:%M"), enddt.strftime("%H:%M"))
+    if date not in event_json[location]:
+        event_json[location][date] = {timespan}
+    else:
+        event_json[location][date].add(timespan)
+
+
 
 def analyse_icals(range1, range2, filenameflag):
-    #num_files = len([f for f in os.listdir(download_path)if os.path.isfile(os.path.join(download_path, f))])
+    event_json = {}
     for x in range(range1, range2):
         if filenameflag == 'first':
-            filename = download_path + str(x) + ".ical"
+            ical_name = os.path.join(download_path, str(x) + ".ical")
         else:
-            filename = download_path + "i" + str(x) + ".ical"
-        ical_name = filename
-        #print(file_name)
+            ical_name = os.path.join(download_path, i + str(x) + ".ical")
+        print("analyse: " + ical_name)
         read_ical = open(ical_name, "rb")
         content = icalendar.Calendar.from_ical(read_ical.read())
-        event_json = { }
-        date_set = {}
         for event in content.walk():
+            if event.name == "VCALENDAR":
+                for event_t in event:
+                    if event.name == "VEVENT":
+                        analyse_ical_event(event_json, event_t)
+
             if event.name == "VEVENT":
-                summary = event.get('summary')
-                description = event.get('description')
-                location = event.get('location')
-                startdt = event.get('dtstart').dt
-                enddt = event.get('dtend').dt
-                exdate = event.get('exdate')
-                location = location.replace("\'", '')
-                location = location.replace("vText(b", '')
-                date_temp = str(startdt.strftime("%Y-%m-%d"))
-                if location not in event_json:
-                    event_json[location] = []
-                if date_temp not in date_set:
-                    date_set[date_temp] = []
+                analyse_ical_event(event_json, event)
+        read_ical.close()
 
-                else:
-                    date_set[date_temp].append([startdt.strftime("%H:%M"), enddt.strftime("%H:%M")])
-                    event_json[location].append(date_set)
-
-            read_ical.close()
-        #print(event_json)
-        return event_json
+    print("event_json (" + str(len(event_json)) + "): " + str(event_json.keys()))
+    # with open("event_json.txt", "w") as f:
+    #     f.write(str(event_json))
+    return event_json
 
 
-def update_icals(i):
-    for x in range(1,i):
-        old_ical = download_path + str(x) + ".ical"
-        new_ical = download_path + "i" + str(x) + ".ical"
+#FIXME: needs review
+def update_icals(new_length):
+    for x in range(1,new_length):
+        old_ical = os.path.join(download_path, str(x) + ".ical")
+        new_ical = os.path.join(download_path, "i" + str(x) + ".ical")
         try:
             new_content = open(new_ical, "rb")
         except FileNotFoundError:
+            # no new file -> skip
             continue
         try:
+            # new file and old file -> possibly apply merge
             old_content = open(old_ical, "rb")
         except FileNotFoundError:
-            #Update
-            event_json = analyse_icals(x, i, "first")
+            # only new file -> just add
+            event_json = analyse_icals(x, x+1, "first")
             add_rooms(event_json)
             continue
 

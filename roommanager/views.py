@@ -11,8 +11,9 @@ import datetime
 
 from django.db import models
 def download_and_analyse(request):
-    get_ical_ids.download_icals();
-    event_json = get_ical_ids.analyse_icals(1, 284, 'first')
+    # num_icals = get_ical_ids.download_icals();
+    num_icals = 285
+    event_json = get_ical_ids.analyse_icals(1, num_icals, 'first')
     dbaccess.add_rooms(event_json)
 
 
