@@ -1,11 +1,29 @@
-{% extends 'base.html' %}
+{% extends 'main.html' %}
 
-    {% load static %}
 {% block content %}
-    <div style="text-align: center">
-  <img src="/static/img/C-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline-block;position:relative;top:2px" width="596" height="879" usemap="#image-map">
-        <img src="/static/img/B-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline-block;position:relative;top:2px" height="879" usemap="#image-map2">
+    <link rel="stylesheet" href="/static/css/login.css">
 
+<div style="text-align: center" id="container">
+<div class="container" style="position:relative;z-index:11;top:100px">
+        <div class="row justify-content-center align-items-center" style="height:1vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+    <form action="" method="post">
+    {% csrf_token %}
+    <table border="0">
+    {{ form }}
+  </table>
+    <input type="submit" value="Submit">
+</form>
+    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <img src="/static/img/C-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline-block;position:relative;top:2px;z-index:10" width="596" height="879" usemap="#image-map">
+
+        <img src="/static/img/B-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline-block;position:relative;top:2px;z-index:10" height="879" usemap="#image-map2">
         <map name="image-map">
     <area target="" alt="67C" title="67C" href="{% url 'room' '67' %}" coords="104,69,192,252" shape="rect">
     <area target="" alt="68C" title="68C" href="{% url 'room' '68' %}" coords="174,393,104,254" shape="rect">
@@ -34,4 +52,5 @@
     <area target="" alt="41B" title="41B" href="{% url 'room' '41' %}" coords="187,625,257,762" shape="rect">
 </map>
     </div>
+
 {% endblock %}
