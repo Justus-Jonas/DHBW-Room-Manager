@@ -1,69 +1,71 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <link rel="stylesheet" href="/static/css/login.css">
+<link rel="stylesheet" href="/static/css/login.css">
 
 <div style="text-align: center" id="container">
-<div class="container" style="position:relative;z-index:11;top:100px">
+    <div class="container" style="position:relative;z-index:1;top:100px">
         <div class="row justify-content-center align-items-center" style="height:1vh">
             <div class="col-4">
                 <div class="card">
                     <div class="card-body">
-    <form action="" method="post">
+<form action="" method="post">
     {% csrf_token %}
     <table border="0">
     {% for field in form  %}
         {% if  field.name == "hourS" %}
-        <b>{{ field.label_tag }}</b>  &nbsp {{ field }}
+            <b>{{ field.label_tag }}</b>  &nbsp {{ field }}
         {% endif %}
         {% if field.name == "hourE" %}
-        <b>{{ field.label_tag }}</b>  &nbsp {{ field }}
+                <b>{{ field.label_tag }}</b>  &nbsp {{ field }}
         {% endif %}
         {% if field.name != "hourS" and field.name != "minS" and field.name != "minE"  and field.name != "hourE"%}
-        <b>{{ field.label_tag }}</b>  &nbsp {{ field }} <br>
+            <b>{{ field.label_tag }}</b>  &nbsp {{ field }} <br>
         {% endif %}
         {% if field.name == "minS" or field.name == "minE" %}
             : {{ field }} <i> (hr:min) </i> <br>
         {% endif %}
     {% endfor %}
-  </table>
+    </table>
     <input type="submit" value="Submit">
 </form>
-    </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  <img src="/static/img/C-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline-block;position:relative;top:2px;z-index:10" width="596" height="879" usemap="#image-map">
 
-        <img src="/static/img/B-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline-block;position:relative;top:2px;z-index:10" height="879" usemap="#image-map2">
-        <map name="image-map">
-    <area target="" alt="67C" title="67C" href="{% url 'room' '67' %}" coords="104,69,192,252" shape="rect">
-    <area target="" alt="68C" title="68C" href="{% url 'room' '68' %}" coords="174,393,104,254" shape="rect">
-    <area target="" alt="69C" title="69C" href="{% url 'room' '69' %}" coords="104,394,175,533" shape="rect">
-    <area target="" alt="70C" title="70C" href="{% url 'room' '70' %}" coords="104,533,176,629" shape="rect">
-    <area target="" alt="50B" title="50B" href="{% url 'room' '50' %}" coords="259,651,428,725" shape="rect">
-    <area target="" alt="51B" title="51B" href="{% url 'room' '51' %}" coords="429,649,594,727" shape="rect">
-    <area target="" alt="49B" title="49B" href="{% url 'room' '49' %}" coords="407,826,261,749" shape="rect">
-    <area target="" alt="48B" title="48B" href="{% url 'room' '48' %}" coords="408,752,544,822" shape="rect">
-    <area target="" alt="47B" title="47B" href="{% url 'room' '47' %}" coords="592,825,545,751" shape="rect">
-    <area target="" alt="66C" title="66C" href="{% url 'room' '66' %}" coords="77,208,2,66" shape="rect">
-    <area target="" alt="65C" title="65C" href="{% url 'room' '65' %}" coords="77,347,5,210" shape="rect">
-    <area target="" alt="64C" title="64C" href="{% url 'room' '64' %}" coords="78,488,3,347" shape="rect">
-    <area target="" alt="63C" title="63C" href="{% url 'room' '63' %}" coords="77,626,4,490" shape="rect">
-</map>
-<map name="image-map2">
-    <area target="" alt="36B" title="36B" href="{% url 'room' '636' %}" coords="158,244,69,58" shape="rect">
-    <area target="" alt="35B" title="35B" href="{% url 'room' '35' %}" coords="86,248,158,385" shape="rect">
-    <area target="" alt="34B" title="34B" href="{% url 'room' '34' %}" coords="159,526,85,388" shape="rect">
-    <area target="" alt="33B" title="33B" href="{% url 'room' '33' %}" coords="87,531,159,621" shape="rect">
-    <area target="" alt="32B" title="32B" href="{% url 'room' '32' %}" coords="111,625,158,669" shape="rect">
-    <area target="" alt="37B" title="37B" href="{% url 'room' '37' %}" coords="186,57,257,196" shape="rect">
-    <area target="" alt="38B" title="38B" href="{% url 'room' '38' %}" coords="258,338,185,200" shape="rect">
-    <area target="" alt="39B" title="39B" href="{% url 'room' '39' %}" coords="186,342,260,479" shape="rect">
-    <area target="" alt="40B" title="40B" href="{% url 'room' '40' %}" coords="258,623,187,483" shape="rect">
-    <area target="" alt="41B" title="41B" href="{% url 'room' '41' %}" coords="187,625,257,762" shape="rect">
-</map>
+    <div style="position:relative; display:inline-block; min-width:900px;">
+        <img src="/static/img/C-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline;position:relative;top:2px" width="596" height="879">
+        <img src="/static/img/B-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline;position:relative;top:2px" height="879">
+
+        <a alt="67C" title="67C" href="{% url 'room' '67' %}" style="top:72px; width:90px; left:122px; height:185px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="68C" title="68C" href="{% url 'room' '68' %}" style="top:259px; width:70px; left:122px; height:137px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="69C" title="69C" href="{% url 'room' '69' %}" style="top:398px; width:70px; left:122px; height:136px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="70C" title="70C" href="{% url 'room' '70' %}" style="top:537px; width:70px; left:122px; height:90px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+
+        <a alt="66C" title="66C" href="{% url 'room' '66' %}" style="top:72px; width:71px; left:25px; height:137px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="65C" title="65C" href="{% url 'room' '65' %}" style="top:211px; width:71px; left:25px; height:138px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="64C" title="64C" href="{% url 'room' '64' %}" style="top:351px; width:71px; left:25px; height:137px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="63C" title="63C" href="{% url 'room' '63' %}" style="top:491px; width:71px; left:25px; height:137px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+
+        <a alt="50B" title="50B" href="{% url 'room' '50' %}" style="top:659px; width:165px; left:283px; height:68px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="51B" title="51B" href="{% url 'room' '51' %}" style="top:659px; width:162px; left:450px; height:68px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+
+        <a alt="49B" title="49B" href="{% url 'room' '49' %}" style="top:755px; width:141px; left:283px; height:68px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="48B" title="48B" href="{% url 'room' '48' %}" style="top:755px; width:139px; left:426px; height:68px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+
+
+        <a alt="36B" title="36B" href="{% url 'room' '36' %}" style="top:60px; width:89px; left:688px; height:187px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="35B" title="35B" href="{% url 'room' '35' %}" style="top:250px; width:71px; left:707px; height:138px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="34B" title="34B" href="{% url 'room' '34' %}" style="top:391px; width:71px; left:707px; height:138px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="33B" title="33B" href="{% url 'room' '33' %}" style="top:532px; width:71px; left:707px; height:91px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+
+        <a alt="37B" title="37B" href="{% url 'room' '37' %}" style="top:60px; width:71px; left:806px; height:140px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="38B" title="38B" href="{% url 'room' '38' %}" style="top:202px; width:71px; left:806px; height:139px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="39B" title="39B" href="{% url 'room' '39' %}" style="top:343px; width:71px; left:806px; height:140px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="40B" title="40B" href="{% url 'room' '40' %}" style="top:485px; width:71px; left:806px; height:139px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
+        <a alt="41B" title="41B" href="{% url 'room' '41' %}" style="top:626px; width:71px; left:806px; height:139px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
     </div>
-
+</div>
 {% endblock %}
