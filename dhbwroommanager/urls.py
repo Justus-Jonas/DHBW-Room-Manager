@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from roommanager.views import download_and_analyse, test_model, retrieve_all, delete_models,retrieve_actual_date
+from roommanager.views import download_and_analyse, test_model, retrieve_all, delete_models,retrieve_actual_date, retrieve_slot_inf
 from roommanager.views import sign, main, room_form
 from django.contrib.auth.views import auth_login, auth_logout
 from django.contrib.auth import views as auth_views
