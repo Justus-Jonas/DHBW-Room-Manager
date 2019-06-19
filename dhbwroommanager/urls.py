@@ -32,6 +32,7 @@ urlpatterns = [
     path('test/', download_and_analyse, name='download_and_analyse'),
     path('<str:room_name>/test_model/', test_model, name='test_model'),
     path('allt', retrieve_all, name="retrieve_all"),
+    path('one', retrieve_slot_inf, name="retrieve_slot_inf"),
     path('delete', delete_models, name="delete_models"),
     path('current', retrieve_actual_date, name="retrieve_actual_date")
 ]
