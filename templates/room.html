@@ -11,23 +11,35 @@
                     <div class="card-body">
 <form action="" method="post">
     {% csrf_token %}
-    <table border="0">
-    {% for field in form  %}
-        {% if  field.name == "hourS" %}
-            <b>{{ field.label_tag }}</b>  &nbsp {{ field }}
-        {% endif %}
-        {% if field.name == "hourE" %}
-                <b>{{ field.label_tag }}</b>  &nbsp {{ field }}
-        {% endif %}
-        {% if field.name != "hourS" and field.name != "minS" and field.name != "minE"  and field.name != "hourE"%}
-            <b>{{ field.label_tag }}</b>  &nbsp {{ field }} <br>
-        {% endif %}
-        {% if field.name == "minS" or field.name == "minE" %}
-            : {{ field }} <i> (hr:min) </i> <br>
-        {% endif %}
-    {% endfor %}
-    </table>
-    <input type="submit" value="Submit">
+    {{ form.non_field_errors }}
+    <div>
+        {{ form.groupName.errors }}
+        <label style="font-weight:bold;margin-bottom:-10px;" for="{{ form.groupName.id_for_label }}">{{ form.groupName.label_tag }}</label>
+        {{ form.groupName }}
+    </div>
+    <div>
+        <div style="display:inline-block;margin-top:13px;">
+            {#<div>#}
+                {#{{ form.hourS.errors }}{{ form.minS.errors }}#}
+                {#<label style="font-weight:bold;" for="{{ form.hourS.id_for_label }}">{{ form.hourS.label_tag }}</label>#}
+            {#</div>#}
+            <div>
+                {{ form.duration.errors }}
+                <label style="font-weight:bold;" for="{{ form.duration.id_for_label }}">{{ form.duration.label_tag }}</label>
+            </div>
+        </div>
+        <div style="display:inline-block;vertical-align:top;padding-top:8px">
+            {#<div align="left">#}
+            {#    {{ form.hourS }} h#}
+            {#    {{ form.minS }} min#}
+            {#</div>#}
+            {#<div align="left" style="padding-top:13px">#}
+            <div align="left" >
+                {{ form.duration }} min
+            </div>
+        </div>
+    </div>
+    <input type="submit" value="Reserve" style="margin-top:10px">
 </form>
                     </div>
                 </div>
@@ -36,8 +48,8 @@
     </div>
 
     <div style="position:relative; display:inline-block; min-width:900px;">
-        <img src="/static/img/C-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline;position:relative;top:2px" width="596" height="879">
-        <img src="/static/img/B-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline;position:relative;top:2px" height="879">
+        <img src="/static/img/C-0.svg" alt="C building" style="margin-left: auto;margin-right: auto;display: inline;position:relative;top:2px" width="596" height="879">
+        <img src="/static/img/B-0.svg" alt="B building" style="margin-left: auto;margin-right: auto;display: inline;position:relative;top:2px" height="879">
 
         <a alt="67C" title="67C" href="{% url 'room' '67' %}" style="top:72px; width:90px; left:122px; height:185px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
         <a alt="68C" title="68C" href="{% url 'room' '68' %}" style="top:259px; width:70px; left:122px; height:137px; position:absolute; display:inline; background:rgba(124,252,0,0.5);"></a>
