@@ -1,5 +1,7 @@
 from django.db import models
 from roommanager.models import Slots, Rooms
+import datetime
+import pytz
 from roommanager import get_ical_ids
 
 def add_rooms(event_json):
@@ -16,16 +18,36 @@ def add_rooms(event_json):
                     saveslots.endtime = '00:00'
                 else:
                     saveslots.endtime = end_time
-                # saveslots.save()
+                saveslots.save()
                 print(room + " " + date + " " + start_time + " " + end_time + " " + str(i))
                 saverooms = Rooms()
                 saverooms.room = room
                 saverooms.date = date
                 saverooms.slotid = saveslots
-                # saverooms.save()
+                saverooms.save()
                 i += 1
-    saveslots.save()
-    saverooms.save()
+    #saveslots.save()
+    #saverooms.save()
+
+
+def room_status(room_name):
+    date = datetime.datetime.now()
+    cur_date = date.strftime("%Y-%m-%d")
+    room = Rooms.objects.filter(room=room_name, date=cur_date)
+    room_dict = {'information': room}
+    tz = pytz.timezone('Europe/Berlin')
+    current_time = date.now(tz)
+    current_time = current_time.strftime("%H:%M:%S")
+    #test_time = datetime.datetime.strptime("10:00:00", "%H:%M:%S")
+    current_time = datetime.datetime.strptime(current_time, "%H:%M:%S")
+    for t in room_dict.get('information'):
+        print(t.slotid.endtime)
+        t_start = datetime.datetime.strptime( str(t.slotid.starttime), "%H:%M:%S")
+        t_end = datetime.datetime.strptime( str(t.slotid.endtime), "%H:%M:%S")
+        if current_time >= t_start and current_time <= t_end:
+            print("In time")
+        else:
+            print("Not in time")
 
 """
 def show_room(room_name):

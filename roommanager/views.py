@@ -8,6 +8,9 @@ from django.contrib.auth import logout
 from roommanager import get_ical_ids
 from roommanager import dbaccess
 import datetime
+import time
+import pytz
+from time import gmtime, strftime, ctime
 
 from django.db import models
 def download_and_analyse(request):
@@ -27,6 +30,7 @@ def delete_models(request):
     Rooms.objects.all().delete()
     return render(request, 'delete.html')
 
+
 def retrieve_all(request):
     all_entries_rooms = Rooms.objects.all()
     all_entries_slots = Slots.objects.all()
@@ -34,10 +38,33 @@ def retrieve_all(request):
     return render(request, 'all.html', context_dict)
 
 
+def retrieve_slot_inf(request):
+    date = datetime.datetime.now()
+    cur_date = date.strftime("%Y-%m-%d")
+    room = Rooms.objects.filter(room="Raum 114D", date=cur_date)
+    room_dict = {'information': room}
+    tz = pytz.timezone('Europe/Berlin')
+    current_time = date.now(tz)
+    current_time = current_time.strftime("%H:%M:%S")
+    #test_time = datetime.datetime.strptime("10:00:00", "%H:%M:%S")
+    current_time = datetime.datetime.strptime(current_time, "%H:%M:%S")
+    for t in room_dict.get('information'):
+        print(t.slotid.endtime)
+        t_start = datetime.datetime.strptime( str(t.slotid.starttime), "%H:%M:%S")
+        t_end = datetime.datetime.strptime( str(t.slotid.endtime), "%H:%M:%S")
+        if current_time >= t_start and current_time <= t_end:
+            print("In time")
+        else:
+            print("Not in time")
+    return render(request, 'actualdate.html', room_dict)
+
+
+
 def retrieve_actual_date(request):
     date = datetime.datetime.now()
     cur_date = date.strftime("%Y-%m-%d")
-    room = Rooms.objects.filter(room="Raum 117D", date=cur_date)
+    print(cur_date)
+    room = Rooms.objects.filter(room="Raum 114D", date=cur_date)
 
     room_dict = {'information': room}
     return render(request, 'actualdate.html', room_dict)

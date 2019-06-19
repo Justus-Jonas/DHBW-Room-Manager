@@ -5,6 +5,9 @@
 <p>Current</p>
                             {% for inf in information%}
                                <p>{{ inf.room}}</p>
+                                <p>{{ inf.date}}</p>
+                                <p>{{ inf.slotid.starttime}}</p>
+                                <p>{{ inf.slotid.endtime}}</p>
                             {% endfor %}
 
                     </div>

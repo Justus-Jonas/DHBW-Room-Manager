@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from roommanager.views import sign, main, download_and_analyse, test_model, retrieve_all, delete_models,retrieve_actual_date
+from roommanager.views import sign, main, download_and_analyse, test_model, retrieve_all, delete_models,retrieve_actual_date, retrieve_slot_inf
 from django.contrib.auth.views import auth_login, auth_logout
 from django.contrib.auth import views as auth_views
 
@@ -30,6 +30,7 @@ urlpatterns = [
     path('test/', download_and_analyse, name='download_and_analyse'),
     path('<str:room_name>/test_model/', test_model, name='test_model'),
     path('allt', retrieve_all, name="retrieve_all"),
+    path('one', retrieve_slot_inf, name="retrieve_slot_inf"),
     path('delete', delete_models, name="delete_models"),
     path('current', retrieve_actual_date, name="retrieve_actual_date")
 ]
