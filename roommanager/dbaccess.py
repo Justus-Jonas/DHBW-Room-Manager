@@ -60,7 +60,14 @@ def room_status(room_name, duration = None):
             return False
     return True
 
-"""
-def show_room(room_name):
-    Rooms.objects.filter(room=room_name)
-"""
+def room_states_colors(roomnames):
+    states = {}
+    for room in roomnames:
+        if room_status(room):
+            if room_status(room, 15):
+                states[room.replace(' ', '_')] = "rgba(124,252,0,0.5)"
+            else:
+                states[room.replace(' ', '_')] = "rgba(255,255,0,0.5)"
+        else:
+            states[room.replace(' ', '_')] = "rgba(255,0,0,0.5)"
+    return states
