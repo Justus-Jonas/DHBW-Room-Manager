@@ -70,9 +70,35 @@ def retrieve_actual_date(request):
     return render(request, 'actualdate.html', room_dict)
 
 
+def get_main_dict():
+    return dbaccess.room_states_colors([
+         "Raum 067C",
+         "Raum 068C",
+         "Raum 069C",
+         "Raum 070C",
+         "Raum 066C",
+         "Raum 065C",
+         "Raum 064C",
+         "Raum 063C",
+         "Raum 050B",
+         "Raum 051B",
+         "Raum 049B",
+         "Raum 048B",
+         "Raum 036B",
+         "Raum 035B",
+         "Raum 034B",
+         "Raum 033B",
+         "Raum 037B",
+         "Raum 038B",
+         "Raum 039B",
+         "Raum 040B",
+         "Raum 041B"
+        ])
+
+
 @login_required(login_url='login/')
 def main(request):
-    return render(request, 'main.html')
+    return render(request, 'main.html', {'states': get_main_dict()})
 
 
 def sign(request):
@@ -83,7 +109,7 @@ def sign(request):
             username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('main')
+            return redirect('main', {'states': get_main_dict()})
     else:
         form = UserCreationForm()
     return render(request, 'sign.html', {'form': form})
@@ -93,8 +119,8 @@ def room_form(request, id):
     if request.method == 'POST':
         form = RoomForm(request.POST, request=request)
         if form.is_valid():
-            return render(request, 'main.html')
+            return render(request, 'main.html', {'states': get_main_dict()})
     else:
         form = RoomForm()
 
-    return render(request, 'room.html', {'form': form})
+    return render(request, 'room.html', {'form': form, 'states': get_main_dict()})
