@@ -24,7 +24,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', main, name='main'),
-    path('room/<int:id>/', room_form, name="room"),
+    path('room/<str:id>/', room_form, name="room"),
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('sign/', sign, name='sign'),

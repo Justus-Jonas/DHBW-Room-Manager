@@ -93,15 +93,9 @@ def sign(request):
 
 def room_form(request, id):
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = RoomForm(request.POST)
-        # check whether it's valid:
+        form = RoomForm(request.POST, request=request)
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
             return render(request, 'main.html')
-        # if a GET (or any other method) we'll create a blank form
     else:
         form = RoomForm()
 

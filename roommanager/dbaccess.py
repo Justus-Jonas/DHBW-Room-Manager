@@ -33,14 +33,19 @@ def add_rooms(event_json):
 def room_status(room_name):
     date = datetime.datetime.now()
     cur_date = date.strftime("%Y-%m-%d")
-    room = Rooms.objects.filter(room=room_name, date=cur_date)
-    room_dict = {'information': room}
+    room_info = Rooms.objects.filter(room=room_name, date=cur_date)
+
+    if len(room_info) == 0:
+        #TODO: throw
+        return False
+
     tz = pytz.timezone('Europe/Berlin')
     current_time = date.now(tz)
     current_time = current_time.strftime("%H:%M:%S")
     #test_time = datetime.datetime.strptime("10:00:00", "%H:%M:%S")
     current_time = datetime.datetime.strptime(current_time, "%H:%M:%S")
-    for t in room_dict.get('information'):
+
+    for t in room_info:
         print(t.slotid.endtime)
         t_start = datetime.datetime.strptime( str(t.slotid.starttime), "%H:%M:%S")
         t_end = datetime.datetime.strptime( str(t.slotid.endtime), "%H:%M:%S")
@@ -48,6 +53,8 @@ def room_status(room_name):
             print("In time")
         else:
             print("Not in time")
+            return False
+    return True
 
 """
 def show_room(room_name):
