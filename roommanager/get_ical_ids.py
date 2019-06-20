@@ -4,21 +4,23 @@ import os
 import icalendar
 import datetime
 import pytz
-#from roommanager.dbaccess import add_rooms
+from roommanager.dbaccess import add_rooms, update_rooms
 download_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "icals")
 
 
 def download_icals():
     index = 0
     ical_site = requests.get("https://vorlesungsplan.dhbw-mannheim.de/ical.php")
-    ical_site= str(ical_site.content)
+    ical_site = str(ical_site.content)
     UIDs = re.findall('[0-9]{7}', ical_site)
+    is_new = True
 
     try:
         if len(os.listdir(download_path) ) == 0:
             var = ""
         else:
             var = 'i'
+            is_new = False
     except FileNotFoundError:
         os.mkdir(download_path)
 
@@ -31,7 +33,7 @@ def download_icals():
             with open(download_url, 'wb') as f:
                 print("download: " + url + " -> " + download_url)
                 f.write(ical.content)
-    return index
+    return (index, is_new)
 
 
 def analyse_ical_event(event_json, event):
@@ -62,14 +64,13 @@ def analyse_ical_event(event_json, event):
         event_json[location][date].add(timespan)
 
 
-
-def analyse_icals(range1, range2, filenameflag):
+def analyse_icals(range1, range2, is_new):
     event_json = {}
     for x in range(range1, range2):
-        if filenameflag == 'first':
+        if is_new:
             ical_name = os.path.join(download_path, str(x) + ".ical")
         else:
-            ical_name = os.path.join(download_path, i + str(x) + ".ical")
+            ical_name = os.path.join(download_path, "i" + str(x) + ".ical")
         print("analyse: " + ical_name)
         read_ical = open(ical_name, "rb")
         content = icalendar.Calendar.from_ical(read_ical.read())
@@ -89,52 +90,26 @@ def analyse_icals(range1, range2, filenameflag):
     return event_json
 
 
-#FIXME: needs review
-def update_icals(new_length):
-    for x in range(1,new_length):
-        old_ical = os.path.join(download_path, str(x) + ".ical")
-        new_ical = os.path.join(download_path, "i" + str(x) + ".ical")
-        try:
-            new_content = open(new_ical, "rb")
-        except FileNotFoundError:
-            # no new file -> skip
-            continue
-        try:
-            # new file and old file -> possibly apply merge
-            old_content = open(old_ical, "rb")
-        except FileNotFoundError:
-            # only new file -> just add
-            event_json = analyse_icals(x, x+1, "first")
-            add_rooms(event_json)
-            continue
+def rotate_icals(num):
+    for f in os.listdir(download_path):
+        if re.search('^[0-9]+\.ical$', f):
+            os.remove(os.path.join(download_path, f))
 
-        #Merge
-        exit_loops = False
-        for line_old in old_content:
-            for line_new in new_content:
-                if line_new != line_old:
-                    old_dict = analyse_icals(x, x + 1, "first")
-                    #print(old_dict)
-                    new_dict = analyse_icals(x, x +1, "new")
-                    #print(new_dict)
-                    compare_dict(old_dict, new_dict)
-                    exit_loops = True
-                    break
-                else:
-                    print("okay")
-            if exit_loops:
-                break
+    for x in range(1, num+1):
+        os.rename(os.path.join(download_path, 'i' + str(x) + ".ical"),
+                  os.path.join(download_path, str(x) + ".ical"))
 
 
-
-def compare_dict(old_dict, new_dict):
-    oldd_keys = set(old_dict.keys())
-    newd_keys = set(new_dict.keys())
-    intersect_keys = oldd_keys.intersection(newd_keys)
-    new_val = oldd_keys - newd_keys
-    rem_val = newd_keys - oldd_keys
-    mod_val = { i : (old_dict[i], new_dict[i]) for i in intersect_keys if old_dict[i] != new_dict[i]}
-
+def download_and_analyse():
+    (num_icals, is_new) = download_icals();
+    # num_icals = 285
+    # is_new = False
+    event_json = analyse_icals(1, num_icals, is_new)
+    if is_new:
+        add_rooms(event_json)
+    else:
+        update_rooms(event_json)
+        rotate_icals(num_icals)
 
 
 def current_date():

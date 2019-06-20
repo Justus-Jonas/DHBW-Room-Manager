@@ -28,6 +28,14 @@ def add_rooms(event_json):
                 saverooms.save()
                 i += 1
 
+@transaction.atomic
+def update_rooms(event_json):
+    print("clean slots")
+    Slots.objects.all().delete()
+    print("clean rooms")
+    Rooms.objects.all().delete()
+    add_rooms(event_json)
+
 def room_status(room_name, duration = None):
     tz = pytz.timezone('Europe/Berlin')
     now = datetime.datetime.now(tz)

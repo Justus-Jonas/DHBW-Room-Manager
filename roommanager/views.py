@@ -17,12 +17,9 @@ import pytz
 from time import gmtime, strftime, ctime
 from django.contrib import messages
 
-from django.db import models
+
 def download_and_analyse(request):
-    # num_icals = get_ical_ids.download_icals();
-    num_icals = 285
-    event_json = get_ical_ids.analyse_icals(1, num_icals, 'first')
-    dbaccess.add_rooms(event_json)
+    get_ical_ids.download_and_analyse()
     return render(request, 'all.html', {'rooms': Rooms.objects.all()})
 
 
