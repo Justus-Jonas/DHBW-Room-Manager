@@ -128,7 +128,8 @@ def room_form(request, id):
                             group=form.data['groupName'],
                             user=request.user)
             myentry.save()
-            #myroom = Rooms(slotid=myentry, date=datetime.datetime.now(), room=id)
+            myroom = Rooms(slotid=myentry, date=datetime.datetime.now(), room="Room "+id)
+            myroom.save()
             return render(request, 'main.html', {'states': get_main_dict()})
     else:
         form = RoomForm()
@@ -136,9 +137,19 @@ def room_form(request, id):
     return render(request, 'room.html', {'form': form, 'states': get_main_dict()})
 
 
-def reserved(request):
-    try:
-        slots = Slots.objects.all().get(user=request.user)
-    except ObjectDoesNotExist:
-        messages.info(request, 'Three credits remain in your account.')
-        return redirect('main')
+def slots_delete_view(request, id):
+    slot = Slots.objects.all().get()
+
+    creator = movie.user.username
+
+    if request.method == "POST" and request.user.is_authenticated and request.user.username == creator:
+        movie.delete()
+        messages.success(request, "Post successfully deleted!")
+        return HttpResponseRedirect("/Blog/list/")
+
+    context = {'movie': movie,
+               'creator': creator,
+               }
+
+    return render(request, 'Blog/movies-delete-view.html', context)
+
