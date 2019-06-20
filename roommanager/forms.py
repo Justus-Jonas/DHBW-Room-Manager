@@ -6,6 +6,10 @@ from roommanager.models import Rooms
 from roommanager.dbaccess import room_status
 
 
+def get_room_from_request(request):
+    return "Raum " + request.path[6:-1]
+
+
 class DurationField(forms.ChoiceField):
     def __init__(self, *args, **kwargs):
         super().__init__(choices=[(x, x) for x in range(15, 135, 15) if x < 60 or x % 30 == 0])
@@ -15,7 +19,7 @@ class DurationField(forms.ChoiceField):
         super().validate(value)
         if self.request != None:
             print("check")
-            if room_status("Raum " + self.request.path[6:-1], value):
+            if room_status(get_room_from_request(self.request), value):
                 print("book")
             else:
                 print("can't book")

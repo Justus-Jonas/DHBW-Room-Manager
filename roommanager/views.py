@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from roommanager import get_ical_ids
-from roommanager.forms import RoomForm
+from roommanager.forms import RoomForm, get_room_from_request
 from roommanager import dbaccess
 import datetime
 import time
@@ -120,12 +120,16 @@ def room_form(request, id):
     if request.method == 'POST':
         form = RoomForm(request.POST, request=request)
         if form.is_valid():
-            myentry = Slots(starttime=datetime.datetime.now(),
-                            endtime=(datetime.datetime.now()+datetime.timedelta(minutes = int(form.data['duration']))),
-                            group=form.data['groupName'],
-                            user=request.user)
-            myentry.save()
-            #myroom = Rooms(slotid=myentry, date=datetime.datetime.now(), room=id)
+            tz = pytz.timezone('Europe/Berlin')
+            now = datetime.datetime.now(tz).replace(microsecond=0)
+            slot = Slots(starttime=now,
+                        endtime=(now + datetime.timedelta(minutes = int(form.data['duration']))),
+                        group=form.data['groupName'],
+                        user=request.user)
+            slot.save()
+            room = Rooms(slotid=slot, date=now.strftime("%Y-%m-%d"), room=get_room_from_request(request))
+            room.save()
+            print("add room: " + room.room + " " + str(room.date) + " " + str(room.slotid))
             return render(request, 'main.html', {'states': get_main_dict()})
     else:
         form = RoomForm()
