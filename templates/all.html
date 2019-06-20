@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="card-body">
-        <p>Allt</p>
-        {% for inf in content%}
-            <p>{{ inf.room }}<br>
-        {% endfor %}
-
-    </div>
+<table>
+    {% for entry in rooms %}
+        <tr>
+            <td>
+                {{ entry.room }}
+            <td>
+            <td>
+                {{ entry.date }}
+            <td>
+            <td>
+                {{ entry.slotid }}
+            <td>
+        <tr>
+    {% endfor %}
+</table>
 {% endblock %}

@@ -1,9 +1,10 @@
-from django.db import models
+from django.db import models, transaction
 from roommanager.models import Slots, Rooms
 import datetime
 import pytz
 from roommanager import get_ical_ids
 
+@transaction.atomic
 def add_rooms(event_json):
     i = 0
     for room, date_dict in event_json.items():
@@ -26,9 +27,6 @@ def add_rooms(event_json):
                 saverooms.slotid = saveslots
                 saverooms.save()
                 i += 1
-    #saveslots.save()
-    #saverooms.save()
-
 
 def room_status(room_name):
     date = datetime.datetime.now()

@@ -20,6 +20,7 @@ def download_and_analyse(request):
     num_icals = 285
     event_json = get_ical_ids.analyse_icals(1, num_icals, 'first')
     dbaccess.add_rooms(event_json)
+    return render(request, 'all.html', {'rooms': Rooms.objects.all()})
 
 
 def test_model(request, room_name):
@@ -30,14 +31,11 @@ def test_model(request, room_name):
 
 def delete_models(request):
     Rooms.objects.all().delete()
-    return render(request, 'delete.html')
+    return render(request, 'all.html', {'rooms': Rooms.objects.all()})
 
 
 def retrieve_all(request):
-    all_entries_rooms = Rooms.objects.all()
-    all_entries_slots = Slots.objects.all()
-    context_dict = {'content': all_entries_rooms, 'slot_list': all_entries_slots}
-    return render(request, 'all.html', context_dict)
+    return render(request, 'all.html', {'rooms': Rooms.objects.all()})
 
 
 def retrieve_slot_inf(request):

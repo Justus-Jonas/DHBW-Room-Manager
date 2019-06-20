@@ -47,6 +47,10 @@ def analyse_ical_event(event_json, event):
     location = location.replace("vText(b", '')
     date = str(startdt.strftime("%Y-%m-%d"))
 
+    # we are only interested in the future!
+    if date < current_date():
+        return;
+
     if location not in event_json:
         event_json[location] = {}
 
@@ -135,7 +139,7 @@ def compare_dict(old_dict, new_dict):
 def current_date():
     date = datetime.datetime.now()
     date = date.strftime("%Y-%m-%d")
-    print(date)
+    return date;
 
-current_date()
+print(current_date())
 
