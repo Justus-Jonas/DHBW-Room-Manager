@@ -18,16 +18,15 @@ class DurationField(forms.ChoiceField):
     def validate(self, value):
         super().validate(value)
         if self.request != None:
-            print("check")
+            # print("check")
             (state, _) = room_status(get_room_from_request(self.request), value)
             if state:
-                print("book")
+                # print("book")
+                pass
             else:
-                print("can't book")
-                return False
+                raise forms.ValidationError("occupied by someone else")
         else:
-            print("fail")
-            return False
+            raise forms.ValidationError("no underlying request")
 
 
 class RoomForm(forms.Form):
