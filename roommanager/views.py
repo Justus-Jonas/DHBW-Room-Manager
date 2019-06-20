@@ -120,8 +120,10 @@ def room_form(request, id):
     if request.method == 'POST':
         form = RoomForm(request.POST, request=request)
         if form.is_valid():
-            myentry = Slots(starttime=datetime.datetime.now(), endtime=(datetime.datetime.now()+form.duration),
-                            group=form.groupName, user=request.user)
+            myentry = Slots(starttime=datetime.datetime.now(),
+                            endtime=(datetime.datetime.now()+datetime.timedelta(minutes = int(form.data['duration']))),
+                            group=form.data['groupName'],
+                            user=request.user)
             myentry.save()
             #myroom = Rooms(slotid=myentry, date=datetime.datetime.now(), room=id)
             return render(request, 'main.html', {'states': get_main_dict()})
