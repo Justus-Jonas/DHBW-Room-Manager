@@ -12,8 +12,10 @@ from roommanager.forms import RoomForm
 from roommanager import dbaccess
 import datetime
 import time
+from django.core.exceptions import ObjectDoesNotExist
 import pytz
 from time import gmtime, strftime, ctime
+from django.contrib import messages
 
 from django.db import models
 def download_and_analyse(request):
@@ -99,6 +101,7 @@ def get_main_dict():
 
 @login_required(login_url='login/')
 def main(request):
+
     return render(request, 'main.html', {'states': get_main_dict()})
 
 
@@ -129,3 +132,11 @@ def room_form(request, id):
         form = RoomForm()
 
     return render(request, 'room.html', {'form': form, 'states': get_main_dict()})
+
+
+def reserved(request):
+    try:
+        slots = Slots.objects.all().get(user=request.user)
+    except ObjectDoesNotExist:
+        messages.info(request, 'Three credits remain in your account.')
+        return redirect('main')
