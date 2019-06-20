@@ -3,7 +3,8 @@ from django.db import models
 class Slots(models.Model):
     starttime = models.TimeField()
     endtime = models.TimeField()
-    #group = models.CharField(max_length=100)
+    group = models.CharField(max_length=100)
+    user = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.starttime) + " - " + str(self.endtime)

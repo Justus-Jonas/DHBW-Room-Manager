@@ -19,8 +19,10 @@ class DurationField(forms.ChoiceField):
                 print("book")
             else:
                 print("can't book")
+                return False
         else:
             print("fail")
+            return False
 
 
 class RoomForm(forms.Form):

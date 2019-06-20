@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.forms import TimeField
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from roommanager.models import Slots, Rooms
@@ -93,6 +94,10 @@ def room_form(request, id):
     if request.method == 'POST':
         form = RoomForm(request.POST, request=request)
         if form.is_valid():
+            myentry = Slots(starttime=datetime.datetime.now(), endtime=(datetime.datetime.now()+form.duration),
+                            group=form.groupName, user=request.user)
+            myentry.save()
+            #myroom = Rooms(slotid=myentry, date=datetime.datetime.now(), room=id)
             return render(request, 'main.html')
     else:
         form = RoomForm()
