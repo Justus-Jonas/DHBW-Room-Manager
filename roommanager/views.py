@@ -113,7 +113,7 @@ def sign(request):
             username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('main', {'states': get_main_dict()})
+            return redirect('main')
     else:
         form = UserCreationForm()
     return render(request, 'sign.html', {'form': form})
@@ -123,8 +123,10 @@ def room_form(request, id):
     if request.method == 'POST':
         form = RoomForm(request.POST, request=request)
         if form.is_valid():
-            myentry = Slots(starttime=datetime.datetime.now(), endtime=(datetime.datetime.now()+form.duration),
-                            group=form.groupName, user=request.user)
+            myentry = Slots(starttime=datetime.datetime.now(),
+                            endtime=(datetime.datetime.now()+datetime.timedelta(minutes = int(form.data['duration']))),
+                            group=form.data['groupName'],
+                            user=request.user)
             myentry.save()
             #myroom = Rooms(slotid=myentry, date=datetime.datetime.now(), room=id)
             return render(request, 'main.html', {'states': get_main_dict()})
