@@ -19,7 +19,8 @@ class DurationField(forms.ChoiceField):
         super().validate(value)
         if self.request != None:
             print("check")
-            if room_status(get_room_from_request(self.request), value):
+            (state, _) = room_status(get_room_from_request(self.request), value)
+            if state:
                 print("book")
             else:
                 print("can't book")
@@ -39,12 +40,5 @@ class RoomForm(forms.Form):
         self.fields['duration'].request = request
 
     groupName = forms.CharField(label='Group name', max_length=50, validators=[validators.validate_slug])
-    #  start_time = forms.TimeField(widget=dhbwroommanager.SelectTimeWidget())
-    #self.start_time = forms.TimeField(label="from")
-    # #self.stop_time = forms.TimeField(label='to')
-    #hourS = forms.ChoiceField(choices=[(x, x) for x in range(8, 21)])
-    #hourS.label = "Start time"
-    #minS = forms.ChoiceField(choices=[(x, x) for x in range(0, 60, 15)])
-    #minS.label = "Mins"
     duration = DurationField()
     duration.label = "Duration"

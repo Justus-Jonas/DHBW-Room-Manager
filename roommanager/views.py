@@ -132,7 +132,7 @@ def room_form(request, id):
             slot.save()
             room = Rooms(slotid=slot, date=now.strftime("%Y-%m-%d"), room=get_room_from_request(request))
             room.save()
-            print("add room: " + room.room + " " + str(room.date) + " " + str(room.slotid))
+            print("add room: " + room.room + " " + str(room.date) + " " + str(room.slotid) + " " + slot.group)
             return render(request, 'main.html', {'states': get_main_dict()})
     else:
         form = RoomForm()

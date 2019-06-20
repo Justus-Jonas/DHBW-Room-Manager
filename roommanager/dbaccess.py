@@ -36,8 +36,8 @@ def room_status(room_name, duration = None):
     room_info = Rooms.objects.filter(room=room_name, date=cur_date)
 
     if len(room_info) == 0:
-        print("room is free that day")
-        return True
+        # print("room is free that day")
+        return (True, None)
 
     if duration != None:
         end_time = now + datetime.timedelta(minutes = int(duration))
@@ -46,29 +46,43 @@ def room_status(room_name, duration = None):
 
     cur_date_obj = datetime.datetime.strptime(str(cur_date), "%Y-%m-%d")
     for t in room_info:
-        print("check: (" + str(now.time()) + "-" + str(now.time()) + "): " + str(t.slotid.starttime) +  "-" +  str(t.slotid.endtime))
-        print("combine: " + str(cur_date_obj) + " and " +str(datetime.datetime.strptime(str(t.slotid.starttime), "%H:%M:%S").time()))
+        # print("check: (" + str(now.time()) + "-" + str(now.time()) + "): " + str(t.slotid.starttime) +  "-" +  str(t.slotid.endtime))
+        # print("combine: " + str(cur_date_obj) + " and " +str(datetime.datetime.strptime(str(t.slotid.starttime), "%H:%M:%S").time()))
         t_start = datetime.datetime.combine(cur_date_obj, datetime.datetime.strptime(str(t.slotid.starttime), "%H:%M:%S").time())
-        print("t_start: " + str(t_start))
-        print("now:     " + str(now))
+        # print("t_start: " + str(t_start))
+        # print("now:     " + str(now))
         t_end = datetime.datetime.combine(cur_date_obj, datetime.datetime.strptime(str(t.slotid.endtime), "%H:%M:%S").time())
-        print("t_end:   " + str(t_end))
-        print("end_time:" + str(end_time))
+        # print("t_end:   " + str(t_end))
+        # print("end_time:" + str(end_time))
         if t_end <= now.replace(tzinfo=None) or t_start >= end_time.replace(tzinfo=None):
-            print("not occupied")
+            # print("not occupied")
+            pass
         else:
-            print("occupied!")
-            return False
-    return True
+            # print("occupied!")
+            return (False, t.slotid)
+    return (True, None)
 
 def room_states_colors(roomnames):
     states = {}
     for room in roomnames:
-        if room_status(room):
-            if room_status(room, 15):
-                states[room.replace(' ', '_')] = "rgba(124,252,0,0.5)"
+        info = {'group': ''}
+        (state, obj) = room_status(room)
+        if state:
+            (state, obj) = room_status(room, 15)
+            if state:
+                info['color'] = "rgba(124,252,0,0.5)"
+                info['occupied'] = False
             else:
-                states[room.replace(' ', '_')] = "rgba(255,255,0,0.5)"
+                info['color'] = "rgba(255,255,0,0.5)"
+                info['occupied'] = True
+                if obj.group != None:
+                    info['group'] = obj.group
         else:
-            states[room.replace(' ', '_')] = "rgba(255,0,0,0.5)"
+            info['occupied'] = True
+            if obj.group != None:
+                info['group'] = obj.group
+                info['color'] = "rgba(0,0,0,0.5)"
+            else:
+                info['color'] = "rgba(255,0,0,0.5)"
+        states[room.replace(' ', '_')] = info
     return states
