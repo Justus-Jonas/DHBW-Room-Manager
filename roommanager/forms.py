@@ -15,7 +15,7 @@ class DurationField(forms.ChoiceField):
         super().validate(value)
         if self.request != None:
             print("check")
-            if room_status(self.request.path[6:-1]):
+            if room_status("Raum " + self.request.path[6:-1], value):
                 print("book")
             else:
                 print("can't book")

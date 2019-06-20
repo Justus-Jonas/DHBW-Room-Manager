@@ -3,6 +3,7 @@ import re
 import os
 import icalendar
 import datetime
+import pytz
 #from roommanager.dbaccess import add_rooms
 download_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "icals")
 
@@ -137,7 +138,8 @@ def compare_dict(old_dict, new_dict):
 
 
 def current_date():
-    date = datetime.datetime.now()
+    tz = pytz.timezone('Europe/Berlin')
+    date = datetime.datetime.now(tz)
     date = date.strftime("%Y-%m-%d")
     return date;
 

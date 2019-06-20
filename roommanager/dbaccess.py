@@ -28,29 +28,35 @@ def add_rooms(event_json):
                 saverooms.save()
                 i += 1
 
-def room_status(room_name):
-    date = datetime.datetime.now()
-    cur_date = date.strftime("%Y-%m-%d")
+def room_status(room_name, duration = None):
+    tz = pytz.timezone('Europe/Berlin')
+    now = datetime.datetime.now(tz)
+    now = datetime.datetime.strptime("2019-06-21 13:00:00", "%Y-%m-%d %H:%M:%S")
+    cur_date = now.strftime("%Y-%m-%d")
     room_info = Rooms.objects.filter(room=room_name, date=cur_date)
 
     if len(room_info) == 0:
-        #TODO: throw
-        return False
+        print("room is free that day")
+        return True
 
-    tz = pytz.timezone('Europe/Berlin')
-    current_time = date.now(tz)
-    current_time = current_time.strftime("%H:%M:%S")
-    #test_time = datetime.datetime.strptime("10:00:00", "%H:%M:%S")
-    current_time = datetime.datetime.strptime(current_time, "%H:%M:%S")
+    if duration != None:
+        end_time = now + datetime.timedelta(minutes = int(duration))
+    else:
+        end_time = now
 
+    cur_date_obj = datetime.datetime.strptime(str(cur_date), "%Y-%m-%d")
     for t in room_info:
-        print(t.slotid.endtime)
-        t_start = datetime.datetime.strptime( str(t.slotid.starttime), "%H:%M:%S")
-        t_end = datetime.datetime.strptime( str(t.slotid.endtime), "%H:%M:%S")
-        if current_time >= t_start and current_time <= t_end:
-            print("In time")
+        print("check: (" + str(now.time()) + "-" + str(now.time()) + "): " + str(t.slotid.starttime) +  "-" +  str(t.slotid.endtime))
+        t_start = datetime.datetime.combine(cur_date_obj, datetime.datetime.strptime(str(t.slotid.starttime), "%H:%M:%S").time())
+        print("t_start: " + str(t_start))
+        print("now:     " + str(now))
+        t_end = datetime.datetime.combine(cur_date_obj, datetime.datetime.strptime(str(t.slotid.endtime), "%H:%M:%S").time())
+        print("t_end:   " + str(t_end))
+        print("end_time:" + str(end_time))
+        if t_end <= now or t_start >= end_time:
+            print("not occupied")
         else:
-            print("Not in time")
+            print("occupied!")
             return False
     return True
 
