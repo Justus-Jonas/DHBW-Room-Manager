@@ -110,7 +110,7 @@ def sign(request):
             username, password = form.cleaned_data.get('username'), form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('main', {'states': get_main_dict()})
+            return redirect('main')
     else:
         form = UserCreationForm()
     return render(request, 'sign.html', {'form': form})
