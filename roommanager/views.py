@@ -128,7 +128,7 @@ def room_form(request, id):
             slot = Slots(starttime=now,
                         endtime=(now + datetime.timedelta(minutes=int(form.data['duration']))),
                         group=form.data['groupName'],
-                        user=request.user)
+                        user=request.user.username)
             slot.save()
             room = Rooms(slotid=slot, date=now.strftime("%Y-%m-%d"), room=get_room_from_request(request))
             room.save()
@@ -141,14 +141,15 @@ def room_form(request, id):
 
 
 def slots_delete_view(request, id):
-    slot = id
+    (status, slot) = dbaccess.room_status("Raum " + id)
 
-    if request.method == "POST" and request.user == slot.user:
+    if status:
+        return redirect('/room/' + id)
+
+    if request.method == "POST" and request.user.username == slot.user:
         slot.delete()
-        messages.success(request, "Slot successfully deleted!")
-        return redirect('main.html')
+        messages.success(request, "Reservation successfully revoked!")
+        return redirect('main')
 
-    context = {'slot': slot}
-
-    return render(request, 'delete.html', context)
+    return render(request, 'delete.html', {'slot': slot, 'states': get_main_dict()})
 

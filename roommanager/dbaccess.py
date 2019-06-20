@@ -65,7 +65,7 @@ def room_status(room_name, duration = None):
 def room_states_colors(roomnames):
     states = {}
     for room in roomnames:
-        info = {'group': ''}
+        info = {'group': '', 'user': ''}
         (state, obj) = room_status(room)
         if state:
             (state, obj) = room_status(room, 15)
@@ -77,10 +77,12 @@ def room_states_colors(roomnames):
                 info['occupied'] = True
                 if obj.group != None:
                     info['group'] = obj.group
+                    info['user'] = obj.user
         else:
             info['occupied'] = True
             if obj.group != None:
                 info['group'] = obj.group
+                info['user'] = obj.user
                 info['color'] = "rgba(0,0,0,0.5)"
             else:
                 info['color'] = "rgba(255,0,0,0.5)"

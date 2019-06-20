@@ -13,147 +13,273 @@
                 {{ states.Raum_067C.group }}
             </div>
         {% endif %}
-        <a alt="067C" title="067C" href="{% url 'room' '067C' %}" style="top:72px; width:90px; left:122px; height:185px; position:absolute; display:inline; background: {{ states.Raum_067C.color }};"></a>
+        <a alt="067C" title="067C" href="
+            {% if states.Raum_067C.user == user.get_username %}
+                {% url 'delete' '067C' %}"
+            {% else %}
+                {% url 'room' '067C' %}"
+            {% endif %}
+            style="top:72px; width:90px; left:122px; height:185px; position:absolute; display:inline; background: {{ states.Raum_067C.color }};"></a>
 
         {% if states.Raum_068C.occupied %}
             <div style="top:259px; width:70px; left:122px; height:137px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_068C.group }}
             </div>
         {% endif %}
-        <a alt="068C" title="068C" href="{% url 'room' '068C' %}" style="top:259px; width:70px; left:122px; height:137px; position:absolute; display:inline; background:{{ states.Raum_068C.color }};"></a>
+        <a alt="068C" title="068C" href="
+            {% if states.Raum_068C.user == user.get_username %}
+                {% url 'delete' '068C' %}"
+            {% else %}
+                {% url 'room' '068C' %}"
+            {% endif %}
+            style="top:259px; width:70px; left:122px; height:137px; position:absolute; display:inline; background:{{ states.Raum_068C.color }};"></a>
 
         {% if states.Raum_069C.occupied %}
             <div style="top:398px; width:70px; left:122px; height:136px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_069C.group }}
             </div>
         {% endif %}
-        <a alt="069C" title="069C" href="{% url 'room' '069C' %}" style="top:398px; width:70px; left:122px; height:136px; position:absolute; display:inline; background:{{ states.Raum_069C.color }};"></a>
+        <a alt="069C" title="069C" href="
+            {% if states.Raum_069C.user == user.get_username %}
+                {% url 'delete' '069C' %}"
+            {% else %}
+                {% url 'room' '069C' %}"
+            {% endif %}
+            style="top:398px; width:70px; left:122px; height:136px; position:absolute; display:inline; background:{{ states.Raum_069C.color }};"></a>
 
         {% if states.Raum_070C.occupied %}
             <div style="top:537px; width:70px; left:122px; height:90px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_070C.group }}
             </div>
         {% endif %}
-        <a alt="070C" title="070C" href="{% url 'room' '070C' %}" style="top:537px; width:70px; left:122px; height:90px; position:absolute; display:inline; background: {{ states.Raum_070C.color }};"></a>
+        <a alt="070C" title="070C" href="
+            {% if states.Raum_070C.user == user.get_username %}
+                {% url 'delete' '070C' %}"
+            {% else %}
+                {% url 'room' '070C' %}"
+            {% endif %}
+            style="top:537px; width:70px; left:122px; height:90px; position:absolute; display:inline; background: {{ states.Raum_070C.color }};"></a>
 
         {% if states.Raum_066C.occupied %}
             <div style="top:72px; width:71px; left:25px; height:137px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_066C.group }}
             </div>
         {% endif %}
-        <a alt="066C" title="066C" href="{% url 'room' '066C' %}" style="top:72px; width:71px; left:25px; height:137px; position:absolute; display:inline; background:  {{ states.Raum_066C.color }};"></a>
+        <a alt="066C" title="066C" href="
+            {% if states.Raum_066C.user == user.get_username %}
+                {% url 'delete' '066C' %}"
+            {% else %}
+                {% url 'room' '066C' %}"
+            {% endif %}
+            style="top:72px; width:71px; left:25px; height:137px; position:absolute; display:inline; background:  {{ states.Raum_066C.color }};"></a>
 
         {% if states.Raum_065C.occupied %}
             <div style="top:211px; width:71px; left:25px; height:138px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_065C.group }}
             </div>
         {% endif %}
-        <a alt="065C" title="065C" href="{% url 'room' '065C' %}" style="top:211px; width:71px; left:25px; height:138px; position:absolute; display:inline; background: {{ states.Raum_065C.color }};"></a>
+        <a alt="065C" title="065C" href="
+            {% if states.Raum_065C.user == user.get_username %}
+                {% url 'delete' '065C' %}"
+            {% else %}
+                {% url 'room' '065C' %}"
+            {% endif %}
+            style="top:211px; width:71px; left:25px; height:138px; position:absolute; display:inline; background: {{ states.Raum_065C.color }};"></a>
 
         {% if states.Raum_064C.occupied %}
             <div style="top:351px; width:71px; left:25px; height:137px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_064C.group }}
             </div>
         {% endif %}
-        <a alt="064C" title="064C" href="{% url 'room' '064C' %}" style="top:351px; width:71px; left:25px; height:137px; position:absolute; display:inline; background: {{ states.Raum_064C.color }};"></a>
+        <a alt="064C" title="064C" href="
+            {% if states.Raum_064C.user == user.get_username %}
+                {% url 'delete' '064C' %}"
+            {% else %}
+                {% url 'room' '064C' %}"
+            {% endif %}
+            style="top:351px; width:71px; left:25px; height:137px; position:absolute; display:inline; background: {{ states.Raum_064C.color }};"></a>
 
         {% if states.Raum_063C.occupied %}
             <div style="top:491px; width:71px; left:25px; height:137px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_063C.group }}
             </div>
         {% endif %}
-        <a alt="063C" title="063C" href="{% url 'room' '063C' %}" style="top:491px; width:71px; left:25px; height:137px; position:absolute; display:inline; background: {{ states.Raum_063C.color }};"></a>
+        <a alt="063C" title="063C" href="
+            {% if states.Raum_063C.user == user.get_username %}
+                {% url 'delete' '063C' %}"
+            {% else %}
+                {% url 'room' '063C' %}"
+            {% endif %}
+            style="top:491px; width:71px; left:25px; height:137px; position:absolute; display:inline; background: {{ states.Raum_063C.color }};"></a>
 
         {% if states.Raum_050B.occupied %}
             <div style="top:659px; width:165px; left:283px; height:68px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_050B.group }}
             </div>
         {% endif %}
-        <a alt="050B" title="050B" href="{% url 'room' '050B' %}" style="top:659px; width:165px; left:283px; height:68px; position:absolute; display:inline; background:{{ states.Raum_050B.color }};"></a>
+        <a alt="050B" title="050B" href="
+            {% if states.Raum_050B.user == user.get_username %}
+                {% url 'delete' '050B' %}"
+            {% else %}
+                {% url 'room' '050B' %}"
+            {% endif %}
+            style="top:659px; width:165px; left:283px; height:68px; position:absolute; display:inline; background:{{ states.Raum_050B.color }};"></a>
 
         {% if states.Raum_051B.occupied %}
             <div style="top:659px; width:162px; left:450px; height:68px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_051B.group }}
             </div>
         {% endif %}
-        <a alt="051B" title="051B" href="{% url 'room' '051B' %}" style="top:659px; width:162px; left:450px; height:68px; position:absolute; display:inline; background:{{ states.Raum_051B.color }};"></a>
+        <a alt="051B" title="051B" href="
+            {% if states.Raum_051B.user == user.get_username %}
+                {% url 'delete' '051B' %}"
+            {% else %}
+                {% url 'room' '051B' %}"
+            {% endif %}
+            style="top:659px; width:162px; left:450px; height:68px; position:absolute; display:inline; background:{{ states.Raum_051B.color }};"></a>
 
         {% if states.Raum_049B.occupied %}
             <div style="top:755px; width:141px; left:283px; height:68px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_049B.group }}
             </div>
         {% endif %}
-        <a alt="049B" title="049B" href="{% url 'room' '049B' %}" style="top:755px; width:141px; left:283px; height:68px; position:absolute; display:inline; background:{{ states.Raum_049B.color }};"></a>
+        <a alt="049B" title="049B" href="
+            {% if states.Raum_049B.user == user.get_username %}
+                {% url 'delete' '049B' %}"
+            {% else %}
+                {% url 'room' '049B' %}"
+            {% endif %}
+            style="top:755px; width:141px; left:283px; height:68px; position:absolute; display:inline; background:{{ states.Raum_049B.color }};"></a>
 
         {% if states.Raum_048B.occupied %}
             <div style="top:755px; width:139px; left:426px; height:68px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_048B.group }}
             </div>
         {% endif %}
-        <a alt="048B" title="048B" href="{% url 'room' '048B' %}" style="top:755px; width:139px; left:426px; height:68px; position:absolute; display:inline; background:{{ states.Raum_048B.color }};"></a>
+        <a alt="048B" title="048B" href="
+            {% if states.Raum_048B.user == user.get_username %}
+                {% url 'delete' '048B' %}"
+            {% else %}
+                {% url 'room' '048B' %}"
+            {% endif %}
+            style="top:755px; width:139px; left:426px; height:68px; position:absolute; display:inline; background:{{ states.Raum_048B.color }};"></a>
 
         {% if states.Raum_036B.occupied %}
             <div style="top:60px; width:89px; left:688px; height:187px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_036B.group }}
             </div>
         {% endif %}
-        <a alt="036B" title="036B" href="{% url 'room' '036B' %}" style="top:60px; width:89px; left:688px; height:187px; position:absolute; display:inline; background: {{ states.Raum_036B.color }};"></a>
+        <a alt="036B" title="036B" href="
+            {% if states.Raum_036B.user == user.get_username %}
+                {% url 'delete' '036B' %}"
+            {% else %}
+                {% url 'room' '036B' %}"
+            {% endif %}
+            style="top:60px; width:89px; left:688px; height:187px; position:absolute; display:inline; background: {{ states.Raum_036B.color }};"></a>
 
         {% if states.Raum_035B.occupied %}
             <div style="top:250px; width:71px; left:707px; height:138px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_035B.group }}
             </div>
         {% endif %}
-        <a alt="035B" title="035B" href="{% url 'room' '035B' %}" style="top:250px; width:71px; left:707px; height:138px; position:absolute; display:inline; background:{{ states.Raum_035B.color }};"></a>
+        <a alt="035B" title="035B" href="
+            {% if states.Raum_035B.user == user.get_username %}
+                {% url 'delete' '035B' %}"
+            {% else %}
+                {% url 'room' '035B' %}"
+            {% endif %}
+            style="top:250px; width:71px; left:707px; height:138px; position:absolute; display:inline; background:{{ states.Raum_035B.color }};"></a>
 
         {% if states.Raum_034B.occupied %}
             <div style="top:391px; width:71px; left:707px; height:138px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_034B.group }}
             </div>
         {% endif %}
-        <a alt="034B" title="034B" href="{% url 'room' '034B' %}" style="top:391px; width:71px; left:707px; height:138px; position:absolute; display:inline; background:{{ states.Raum_034B.color }};"></a>
+        <a alt="034B" title="034B" href="
+            {% if states.Raum_034B.user == user.get_username %}
+                {% url 'delete' '034B' %}"
+            {% else %}
+                {% url 'room' '034B' %}"
+            {% endif %}
+            style="top:391px; width:71px; left:707px; height:138px; position:absolute; display:inline; background:{{ states.Raum_034B.color }};"></a>
 
         {% if states.Raum_033B.occupied %}
             <div style="top:532px; width:71px; left:707px; height:91px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_033B.group }}
             </div>
         {% endif %}
-        <a alt="033B" title="033B" href="{% url 'room' '033B' %}" style="top:532px; width:71px; left:707px; height:91px; position:absolute; display:inline; background: {{ states.Raum_033B.color }};"></a>
+        <a alt="033B" title="033B" href="
+            {% if states.Raum_033B.user == user.get_username %}
+                {% url 'delete' '033B' %}"
+            {% else %}
+                {% url 'room' '033B' %}"
+            {% endif %}
+            style="top:532px; width:71px; left:707px; height:91px; position:absolute; display:inline; background: {{ states.Raum_033B.color }};"></a>
 
         {% if states.Raum_037B.occupied %}
             <div style="top:60px; width:71px; left:806px; height:140px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_037B.group }}
             </div>
         {% endif %}
-        <a alt="037B" title="037B" href="{% url 'room' '037B' %}" style="top:60px; width:71px; left:806px; height:140px; position:absolute; display:inline; background: {{ states.Raum_037B.color }};"></a>
+        <a alt="037B" title="037B" href="
+            {% if states.Raum_037B.user == user.get_username %}
+                {% url 'delete' '037B' %}"
+            {% else %}
+                {% url 'room' '037B' %}"
+            {% endif %}
+            style="top:60px; width:71px; left:806px; height:140px; position:absolute; display:inline; background: {{ states.Raum_037B.color }};"></a>
 
         {% if states.Raum_038B.occupied %}
             <div style="top:202px; width:71px; left:806px; height:139px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_038B.group }}
             </div>
         {% endif %}
-        <a alt="038B" title="038B" href="{% url 'room' '038B' %}" style="top:202px; width:71px; left:806px; height:139px; position:absolute; display:inline; background:{{ states.Raum_038B.color }};"></a>
+        <a alt="038B" title="038B" href="
+            {% if states.Raum_038B.user == user.get_username %}
+                {% url 'delete' '038B' %}"
+            {% else %}
+                {% url 'room' '038B' %}"
+            {% endif %}
+            style="top:202px; width:71px; left:806px; height:139px; position:absolute; display:inline; background:{{ states.Raum_038B.color }};"></a>
 
         {% if states.Raum_039B.occupied %}
             <div style="top:343px; width:71px; left:806px; height:140px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_039B.group }}
             </div>
         {% endif %}
-        <a alt="039B" title="039B" href="{% url 'room' '039B' %}" style="top:343px; width:71px; left:806px; height:140px; position:absolute; display:inline; background:{{ states.Raum_039B.color }};"></a>
+        <a alt="039B" title="039B" href="
+            {% if states.Raum_039B.user == user.get_username %}
+                {% url 'delete' '039B' %}"
+            {% else %}
+                {% url 'room' '039B' %}"
+            {% endif %}
+            style="top:343px; width:71px; left:806px; height:140px; position:absolute; display:inline; background:{{ states.Raum_039B.color }};"></a>
 
         {% if states.Raum_040B.occupied %}
             <div style="top:485px; width:71px; left:806px; height:139px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_040B.group }}
             </div>
         {% endif %}
-        <a alt="040B" title="040B" href="{% url 'room' '040B' %}" style="top:485px; width:71px; left:806px; height:139px; position:absolute; display:inline; background:{{ states.Raum_040B.color }};"></a>
+        <a alt="040B" title="040B" href="
+            {% if states.Raum_040B.user == user.get_username %}
+                {% url 'delete' '040B' %}"
+            {% else %}
+                {% url 'room' '040B' %}"
+            {% endif %}
+            style="top:485px; width:71px; left:806px; height:139px; position:absolute; display:inline; background:{{ states.Raum_040B.color }};"></a>
 
         {% if states.Raum_041B.occupied %}
             <div style="top:626px; width:71px; left:806px; height:139px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_041B.group }}
             </div>
         {% endif %}
-        <a alt="041B" title="041B" href="{% url 'room' '041B' %}" style="top:626px; width:71px; left:806px; height:139px; position:absolute; display:inline; background:{{ states.Raum_041B.color }};"></a>
+        <a alt="041B" title="041B" href="
+            {% if states.Raum_041B.user == user.get_username %}
+                {% url 'delete' '041B' %}"
+            {% else %}
+                {% url 'room' '041B' %}"
+            {% endif %}
+            style="top:626px; width:71px; left:806px; height:139px; position:absolute; display:inline; background:{{ states.Raum_041B.color }};"></a>
     </div>
 </div>
 {% endblock %}
