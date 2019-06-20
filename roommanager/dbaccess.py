@@ -31,7 +31,7 @@ def add_rooms(event_json):
 def room_status(room_name, duration = None):
     tz = pytz.timezone('Europe/Berlin')
     now = datetime.datetime.now(tz)
-    now = datetime.datetime.strptime("2019-06-21 13:00:00", "%Y-%m-%d %H:%M:%S")
+    #now = datetime.datetime.strptime("2019-06-21 13:00:00", "%Y-%m-%d %H:%M:%S")
     cur_date = now.strftime("%Y-%m-%d")
     room_info = Rooms.objects.filter(room=room_name, date=cur_date)
 
@@ -47,13 +47,14 @@ def room_status(room_name, duration = None):
     cur_date_obj = datetime.datetime.strptime(str(cur_date), "%Y-%m-%d")
     for t in room_info:
         print("check: (" + str(now.time()) + "-" + str(now.time()) + "): " + str(t.slotid.starttime) +  "-" +  str(t.slotid.endtime))
+        print("combine: " + str(cur_date_obj) + " and " +str(datetime.datetime.strptime(str(t.slotid.starttime), "%H:%M:%S").time()))
         t_start = datetime.datetime.combine(cur_date_obj, datetime.datetime.strptime(str(t.slotid.starttime), "%H:%M:%S").time())
         print("t_start: " + str(t_start))
         print("now:     " + str(now))
         t_end = datetime.datetime.combine(cur_date_obj, datetime.datetime.strptime(str(t.slotid.endtime), "%H:%M:%S").time())
         print("t_end:   " + str(t_end))
         print("end_time:" + str(end_time))
-        if t_end <= now or t_start >= end_time:
+        if t_end <= now.replace(tzinfo=None) or t_start >= end_time.replace(tzinfo=None):
             print("not occupied")
         else:
             print("occupied!")
