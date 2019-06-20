@@ -126,7 +126,7 @@ def room_form(request, id):
             tz = pytz.timezone('Europe/Berlin')
             now = datetime.datetime.now(tz).replace(microsecond=0)
             slot = Slots(starttime=now,
-                        endtime=(now + datetime.timedelta(minutes = int(form.data['duration']))),
+                        endtime=(now + datetime.timedelta(minutes=int(form.data['duration']))),
                         group=form.data['groupName'],
                         user=request.user)
             slot.save()
@@ -141,18 +141,14 @@ def room_form(request, id):
 
 
 def slots_delete_view(request, id):
-    slot = Slots.objects.all().get()
+    slot = id
 
-    creator = movie.user.username
+    if request.method == "POST" and request.user == slot.user:
+        slot.delete()
+        messages.success(request, "Slot successfully deleted!")
+        return redirect('main.html')
 
-    if request.method == "POST" and request.user.is_authenticated and request.user.username == creator:
-        movie.delete()
-        messages.success(request, "Post successfully deleted!")
-        return HttpResponseRedirect("/Blog/list/")
+    context = {'slot': slot}
 
-    context = {'movie': movie,
-               'creator': creator,
-               }
-
-    return render(request, 'Blog/movies-delete-view.html', context)
+    return render(request, 'delete.html', context)
 

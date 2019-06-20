@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from roommanager.views import download_and_analyse, test_model, retrieve_all, delete_models, retrieve_actual_date, \
-    retrieve_slot_inf, reserved
+    retrieve_slot_inf, slots_delete_view
 from roommanager.views import sign, main, room_form
 from django.contrib.auth.views import auth_login, auth_logout
 from django.contrib.auth import views as auth_views
@@ -25,7 +25,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', main, name='main'),
-    path('myroom', reserved, name='reserved'),
+    path('delete/<str:id>/', slots_delete_view, name='delete'),
     path('room/<str:id>/', room_form, name="room"),
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
