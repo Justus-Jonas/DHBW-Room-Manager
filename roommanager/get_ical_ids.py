@@ -9,6 +9,7 @@ download_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "icals
 
 
 def download_icals():
+    """Download Icals from vorlesungsplan.dhbw-mannheim.de"""
     index = 0
     ical_site = requests.get("https://vorlesungsplan.dhbw-mannheim.de/ical.php")
     ical_site = str(ical_site.content)
@@ -26,6 +27,7 @@ def download_icals():
 
     for ids in UIDs:
         index += 1 #Starts with 1
+        """Create Path for the Ical file"""
         download_url = os.path.join(download_path, var + str(index) + '.ical')
         url = "http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=" + ids
         if(len(download_path)) != len(UIDs):
@@ -37,6 +39,7 @@ def download_icals():
 
 
 def analyse_ical_event(event_json, event):
+    """Analysing the Icals"""
     location = event.get('location')
     if location == '':
         return
