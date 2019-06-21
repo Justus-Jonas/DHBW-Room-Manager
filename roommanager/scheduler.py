@@ -8,4 +8,4 @@ def start():
     scheduler = BackgroundScheduler()
     scheduler.add_job(getCurrentWeather, 'interval', hours=3)
     scheduler.start()
-    #sched.add(getCurrentWeather, 'cron', hour=2)
+    #sched.add(#updateFunktionHierReinRestPräpraiert, 'cron', hour=2)
