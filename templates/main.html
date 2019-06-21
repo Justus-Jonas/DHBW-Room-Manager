@@ -3,7 +3,9 @@
 {% load static %}
 {% block content %}
 <div style="text-align: center">
-
+    {% if weather > 25.0 %}
+    <p>Sehr heiß. Bitte markierte Räume meiden!</p>
+    {% endif %}
     <div style="position:relative; display:inline-block; min-width:900px;top:10px;">
         <img src="/static/img/C-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline;position:relative;top:2px" width="596" height="879">
         <img src="/static/img/B-0.svg" alt="Snow" style="margin-left: auto;margin-right: auto;display: inline;position:relative;top:2px" height="879">
@@ -11,6 +13,12 @@
         {% if states.Raum_067C.occupied %}
             <div style="top:72px; width:90px; left:122px; height:185px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_067C.group }}
+            </div>
+        {% endif %}
+        {% if weather > 25.0 %}
+            <div style="top:72px; width:90px; left:122px; height:185px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                <br>
+                &#9832;
             </div>
         {% endif %}
         <a alt="067C" title="067C" href="
@@ -26,6 +34,12 @@
                 {{ states.Raum_068C.group }}
             </div>
         {% endif %}
+        {% if weather > 25.0 %}
+            <div style="top:259px; width:70px; left:122px; height:137px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                <br>
+                &#9832;
+            </div>
+        {% endif %}
         <a alt="068C" title="068C" href="
             {% if states.Raum_068C.user == user.get_username %}
                 {% url 'delete' '068C' %}"
@@ -39,6 +53,12 @@
                 {{ states.Raum_069C.group }}
             </div>
         {% endif %}
+        {% if weather > 25.0 %}
+            <div style="top:398px; width:70px; left:122px; height:136px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                <br>
+                &#9832;
+            </div>
+        {% endif %}
         <a alt="069C" title="069C" href="
             {% if states.Raum_069C.user == user.get_username %}
                 {% url 'delete' '069C' %}"
@@ -50,6 +70,12 @@
         {% if states.Raum_070C.occupied %}
             <div style="top:537px; width:70px; left:122px; height:90px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_070C.group }}
+            </div>
+        {% endif %}
+        {% if weather > 25.0 %}
+            <div style="top:537px; width:70px; left:122px; height:90px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                <br>
+                &#9832;
             </div>
         {% endif %}
         <a alt="070C" title="070C" href="
@@ -221,6 +247,12 @@
                 {{ states.Raum_037B.group }}
             </div>
         {% endif %}
+        {% if weather > 25.0 %}
+            <div style="top:60px; width:71px; left:806px; height:140px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                <br>
+                &#9832;
+            </div>
+        {% endif %}
         <a alt="037B" title="037B" href="
             {% if states.Raum_037B.user == user.get_username %}
                 {% url 'delete' '037B' %}"
@@ -232,6 +264,12 @@
         {% if states.Raum_038B.occupied %}
             <div style="top:202px; width:71px; left:806px; height:139px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_038B.group }}
+            </div>
+        {% endif %}
+        {% if weather > 25.0 %}
+            <div style="top:202px; width:71px; left:806px; height:139px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                <br>
+                &#9832;
             </div>
         {% endif %}
         <a alt="038B" title="038B" href="
@@ -247,6 +285,12 @@
                 {{ states.Raum_039B.group }}
             </div>
         {% endif %}
+        {% if weather > 25.0 %}
+            <div style="top:343px; width:71px; left:806px; height:140px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                <br>
+                &#9832;
+            </div>
+        {% endif %}
         <a alt="039B" title="039B" href="
             {% if states.Raum_039B.user == user.get_username %}
                 {% url 'delete' '039B' %}"
@@ -258,6 +302,12 @@
         {% if states.Raum_040B.occupied %}
             <div style="top:485px; width:71px; left:806px; height:139px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
                 {{ states.Raum_040B.group }}
+            </div>
+        {% endif %}
+        {% if weather > 25.0 %}
+            <div style="top:485px; width:71px; left:806px; height:139px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                <br>
+                &#9832;
             </div>
         {% endif %}
         <a alt="040B" title="040B" href="
@@ -273,6 +323,13 @@
                 {{ states.Raum_041B.group }}
             </div>
         {% endif %}
+        {% if weather > 25.0 %}
+            <div style="top:626px; width:71px; left:806px; height:139px; position:absolute; display:inline; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+            <br>
+            &#9832;
+        </div>
+    {% endif %}
+
         <a alt="041B" title="041B" href="
             {% if states.Raum_041B.user == user.get_username %}
                 {% url 'delete' '041B' %}"

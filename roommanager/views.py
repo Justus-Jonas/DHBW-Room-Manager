@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.forms import TimeField
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from roommanager.models import Slots, Rooms
+from roommanager.models import Slots, Rooms, Forecast
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
@@ -10,6 +10,7 @@ from django.contrib.auth import logout
 from roommanager import get_ical_ids
 from roommanager.forms import RoomForm, get_room_from_request
 from roommanager import dbaccess
+from roommanager import openweather
 import datetime
 import time
 from django.core.exceptions import ObjectDoesNotExist
@@ -98,8 +99,9 @@ def get_main_dict():
 
 @login_required(login_url='login/')
 def main(request):
-
-    return render(request, 'main.html', {'states': get_main_dict()})
+    fc = Forecast.objects.all()[:1].get()
+    weather = fc.temp
+    return render(request, 'main.html', {'states': get_main_dict(), 'weather': weather})
 
 
 def sign(request):
@@ -133,8 +135,10 @@ def room_form(request, id):
             return render(request, 'main.html', {'states': get_main_dict()})
     else:
         form = RoomForm()
-
-    return render(request, 'room.html', {'form': form, 'states': get_main_dict()})
+    fc = Forecast.objects.all()[:1].get()
+    weather = fc.temp
+    return render(request, 'room.html', {'form': form, 'states': get_main_dict(),
+                                         'weather': weather})
 
 
 def slots_delete_view(request, id):
@@ -147,6 +151,8 @@ def slots_delete_view(request, id):
         slot.delete()
         messages.success(request, "Reservation successfully revoked!")
         return redirect('main')
-
-    return render(request, 'delete.html', {'slot': slot, 'states': get_main_dict()})
+    fc = Forecast.objects.all()[:1].get()
+    weather = fc.temp
+    return render(request, 'delete.html', {'slot': slot, 'states': get_main_dict(),
+                                           'weather': weather})
 

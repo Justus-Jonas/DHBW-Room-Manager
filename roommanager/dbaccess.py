@@ -6,10 +6,12 @@ from roommanager import get_ical_ids
 
 @transaction.atomic
 def add_rooms(event_json):
+    """Function do add information about a room and a slot into the db"""
     i = 0
     for room, date_dict in event_json.items():
         for date, timespan_tuple in date_dict.items():
             for start_time, end_time in timespan_tuple:
+                """Adding Slots with start and endtime"""
                 saveslots = Slots()
                 if start_time is None:
                     saveslots.starttime = '00:00'
@@ -21,6 +23,7 @@ def add_rooms(event_json):
                     saveslots.endtime = end_time
                 saveslots.save()
                 print(room + " " + date + " " + start_time + " " + end_time + " " + str(i))
+                """Adding Rooms with roomnumber, date and a Slot fk"""
                 saverooms = Rooms()
                 saverooms.room = room
                 saverooms.date = date
@@ -37,6 +40,7 @@ def update_rooms(event_json):
     add_rooms(event_json)
 
 def room_status(room_name, duration = None):
+    """Function to check if rooms are occupied or nor"""
     tz = pytz.timezone('Europe/Berlin')
     now = datetime.datetime.now(tz)
     #now = datetime.datetime.strptime("2019-06-21 13:00:00", "%Y-%m-%d %H:%M:%S")
@@ -71,6 +75,7 @@ def room_status(room_name, duration = None):
     return (True, None)
 
 def room_states_colors(roomnames):
+    """Function to display the room occupation status"""
     states = {}
     for room in roomnames:
         info = {'group': '', 'user': ''}
@@ -78,9 +83,11 @@ def room_states_colors(roomnames):
         if state:
             (state, obj) = room_status(room, 15)
             if state:
+                """Room is free"""
                 info['color'] = "rgba(124,252,0,0.5)"
                 info['occupied'] = False
             else:
+                """Room will be free in less than 15 minutes"""
                 info['color'] = "rgba(255,255,0,0.5)"
                 info['occupied'] = True
                 if obj.group != None:
@@ -89,10 +96,12 @@ def room_states_colors(roomnames):
         else:
             info['occupied'] = True
             if obj.group != None:
+                """Room occupied by student group"""
                 info['group'] = obj.group
                 info['user'] = obj.user
                 info['color'] = "rgba(0,0,0,0.5)"
             else:
+                """Room occupied by docent or prof"""
                 info['color'] = "rgba(255,0,0,0.5)"
         states[room.replace(' ', '_')] = info
     return states
