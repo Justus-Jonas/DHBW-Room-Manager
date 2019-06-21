@@ -99,9 +99,16 @@ def get_main_dict():
 
 @login_required(login_url='login/')
 def main(request):
-    fc = Forecast.objects.all()[:1].get()
-    weather = fc.temp
-    return render(request, 'main.html', {'states': get_main_dict(), 'weather': weather})
+    return render(request, 'main.html', {'states': get_main_dict(), 'weather': get_temp()})
+
+
+def get_temp():
+    try:
+        fc = Forecast.objects.all()[:1].get()
+    except:
+        openweather.getCurrentWeather()
+        fc = Forecast.objects.all()[:1].get()
+    return fc.temp
 
 
 def sign(request):
@@ -135,10 +142,8 @@ def room_form(request, id):
             return render(request, 'main.html', {'states': get_main_dict()})
     else:
         form = RoomForm()
-    fc = Forecast.objects.all()[:1].get()
-    weather = fc.temp
     return render(request, 'room.html', {'form': form, 'states': get_main_dict(),
-                                         'weather': weather})
+                                         'weather': get_temp()})
 
 
 def slots_delete_view(request, id):
@@ -151,8 +156,6 @@ def slots_delete_view(request, id):
         slot.delete()
         messages.success(request, "Reservation successfully revoked!")
         return redirect('main')
-    fc = Forecast.objects.all()[:1].get()
-    weather = fc.temp
     return render(request, 'delete.html', {'slot': slot, 'states': get_main_dict(),
-                                           'weather': weather})
+                                           'weather': get_temp()})
 
