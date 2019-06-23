@@ -171,7 +171,7 @@ def room_form(request, id):
 
 
 def slots_delete_view(request, id):
-    (status, slot) = dbaccess.room_status("Raum " + id)
+    (status, slot, service) = dbaccess.room_status("Raum " + id)
     if status:
         return redirect('/room/' + id)
 

@@ -47,16 +47,25 @@ def room_status(room_name, duration = None):
     cur_date = now.strftime("%Y-%m-%d")
     room_info = Rooms.objects.filter(room=room_name, date=cur_date)
 
+    cur_date_obj = datetime.datetime.strptime(str(cur_date), "%Y-%m-%d")
+    today_start_time = datetime.datetime.combine(cur_date_obj, datetime.datetime.strptime("06:00:00", "%H:%M:%S").time())
+    out_of_service = False
+    if now.replace(tzinfo=None) < today_start_time:
+        out_of_service = True
+    else:
+        today_end_time = datetime.datetime.combine(cur_date_obj, datetime.datetime.strptime("21:00:00", "%H:%M:%S").time())
+        if now.replace(tzinfo=None) > today_end_time:
+            out_of_service = True
+
     if len(room_info) == 0:
         # print("room is free that day")
-        return (True, None)
+        return (True, None, out_of_service)
 
     if duration != None:
         end_time = now + datetime.timedelta(minutes = int(duration))
     else:
         end_time = now
 
-    cur_date_obj = datetime.datetime.strptime(str(cur_date), "%Y-%m-%d")
     for t in room_info:
         # print("check: (" + str(now.time()) + "-" + str(now.time()) + "): " + str(t.slotid.starttime) +  "-" +  str(t.slotid.endtime))
         # print("combine: " + str(cur_date_obj) + " and " +str(datetime.datetime.strptime(str(t.slotid.starttime), "%H:%M:%S").time()))
@@ -71,17 +80,18 @@ def room_status(room_name, duration = None):
             pass
         else:
             # print("occupied!")
-            return (False, t.slotid)
-    return (True, None)
+            return (False, t.slotid, out_of_service)
+    return (True, None, out_of_service)
 
 def room_states_colors(roomnames):
     """Function to display the room occupation status"""
     states = {}
     for room in roomnames:
         info = {'group': '', 'user': ''}
-        (state, obj) = room_status(room)
+        (state, obj, service) = room_status(room)
+        states['out_of_service'] = service
         if state:
-            (state, obj) = room_status(room, 15)
+            (state, obj, service) = room_status(room, 15)
             if state:
                 """Room is free"""
                 info['color'] = "rgba(124,252,0,0.5)"
