@@ -146,7 +146,7 @@ def room_form(request, id):
     s = []
     time = (now + datetime.timedelta(hours=3)).time()
     for r in rooms:
-        if now.time() < r.slotid.endtime < time:
+        if now.time() > r.slotid.endtime and r.slotid.starttime > time:
             if r.slotid.group:
                 s.append([str(r.slotid), str(r.slotid.group)])
             else:
