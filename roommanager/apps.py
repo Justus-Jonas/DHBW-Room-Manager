@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+import sys
 
 
 class RoommanagerConfig(AppConfig):
@@ -6,4 +7,5 @@ class RoommanagerConfig(AppConfig):
 
     def ready(self):
         from roommanager import scheduler
-        scheduler.start()
+        if sys.argv[1] == 'runserver':
+            scheduler.start()
