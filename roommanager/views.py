@@ -150,10 +150,20 @@ def room_form(request, id):
                 s.append([str(r.slotid), str(r.slotid.group)])
             else:
                 s.append([str(r.slotid), "BLOCKED"])
-    return render(request, 'room.html', {'form': form, 'states': get_main_dict(),
+    states = get_main_dict()
+    try:
+        user = states["Raum_" + id]['user']
+        if user == '':
+            bookable = True
+        else:
+            bookable = False
+    except:
+        bookable = True
+    return render(request, 'room.html', {'form': form, 'states': states,
                                          'rooms': s,
                                          'room': get_room_from_request(id),
-                                         'weather': get_temp()})
+                                         'weather': get_temp(),
+                                         'bookable': bookable})
 
 
 def slots_delete_view(request, id):

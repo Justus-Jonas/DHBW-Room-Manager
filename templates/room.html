@@ -5,6 +5,7 @@
     {% if weather > 25.0 %}
         <p style="text-align: center">Sehr heiß. Bitte markierte Räume meiden!</p>
     {% endif %}
+{% if bookable %}
 <div style="text-align: center" id="container">
     <div class="container" style="position:relative;z-index:1;top:100px">
         <div class="row justify-content-center align-items-center" style="height:1vh">
@@ -39,12 +40,13 @@
             </div>
         </div>
     </div>
+{% endif %}
 
 
 
 {% if rooms %}
 <div style="text-align: center" id="container">
-    <div class="container" style="position:relative;z-index:1;top:300px">
+    <div class="container" style="position:relative;z-index:1; top:{% if bookable %}300{% else %}10{% endif %}px">
         <div class="row justify-content-center align-items-left" style="height:1vh">
             <div class="col-4">
                 <div class="card">
