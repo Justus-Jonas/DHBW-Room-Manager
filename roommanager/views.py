@@ -26,7 +26,6 @@ def download_and_analyse(request):
 
 def test_model(request, room_name):
     room = Rooms.objects.filter(room=room_name)
-
     return render(request, 'models_test.html', room)
 
 
@@ -144,9 +143,9 @@ def room_form(request, id):
         form = RoomForm()
     rooms = Rooms.objects.filter(date=now.strftime("%Y-%m-%d"), room=get_room_from_request(id))
     s = []
-    time = (now + datetime.timedelta(hours=3)).time()
+    time = (now + datetime.timedelta(hours=3))
     for r in rooms:
-        if now.time() > r.slotid.endtime and r.slotid.starttime > time:
+        if now.time() < r.slotid.endtime or time.time() > r.slotid.starttime:
             if r.slotid.group:
                 s.append([str(r.slotid), str(r.slotid.group)])
             else:
