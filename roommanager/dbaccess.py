@@ -43,7 +43,7 @@ def room_status(room_name, duration = None):
     """Function to check if rooms are occupied or nor"""
     tz = pytz.timezone('Europe/Berlin')
     now = datetime.datetime.now(tz)
-    #now = datetime.datetime.strptime("2019-06-21 13:00:00", "%Y-%m-%d %H:%M:%S")
+    # now = datetime.datetime.strptime("2019-06-25 15:00:00", "%Y-%m-%d %H:%M:%S")
     cur_date = now.strftime("%Y-%m-%d")
     room_info = Rooms.objects.filter(room=room_name, date=cur_date)
 

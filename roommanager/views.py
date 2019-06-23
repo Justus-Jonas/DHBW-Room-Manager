@@ -157,10 +157,10 @@ def room_form(request, id):
     states = get_main_dict()
     try:
         user = states["Raum_" + id]['user']
-        if user == '':
-            bookable = True
-        else:
+        if user != '' or states["Raum_" + id]['occupied']:
             bookable = False
+        else:
+            bookable = True
     except:
         bookable = True
     return render(request, 'room.html', {'form': form, 'states': states,
