@@ -126,29 +126,37 @@ def sign(request):
 
 
 def room_form(request, id):
+    tz = pytz.timezone('Europe/Berlin')
+    now = datetime.datetime.now(tz).replace(microsecond=0)
     if request.method == 'POST':
         form = RoomForm(request.POST, request=request)
         if form.is_valid():
-            tz = pytz.timezone('Europe/Berlin')
-            now = datetime.datetime.now(tz).replace(microsecond=0)
             slot = Slots(starttime=now,
                         endtime=(now + datetime.timedelta(minutes=int(form.data['duration']))),
                         group=form.data['groupName'],
                         user=request.user.username)
             slot.save()
-            room = Rooms(slotid=slot, date=now.strftime("%Y-%m-%d"), room=get_room_from_request(request))
+            room = Rooms(slotid=slot, date=now.strftime("%Y-%m-%d"), room=get_room_from_request(id))
             room.save()
             print("add room: " + room.room + " " + str(room.date) + " " + str(room.slotid) + " " + slot.group)
             return render(request, 'main.html', {'states': get_main_dict()})
     else:
         form = RoomForm()
+    rooms = Rooms.objects.filter(date=now.strftime("%Y-%m-%d"), room=get_room_from_request(id))
+    s = []
+    for r in rooms:
+        if r.slotid.group:
+            s.append([str(r.slotid), str(r.slotid.group)])
+        else:
+            s.append([str(r.slotid), "BLOCKED"])
     return render(request, 'room.html', {'form': form, 'states': get_main_dict(),
+                                         'rooms': s,
+                                         'room': get_room_from_request(id),
                                          'weather': get_temp()})
 
 
 def slots_delete_view(request, id):
     (status, slot) = dbaccess.room_status("Raum " + id)
-
     if status:
         return redirect('/room/' + id)
 

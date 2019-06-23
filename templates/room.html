@@ -40,6 +40,50 @@
         </div>
     </div>
 
+
+
+{% if rooms %}
+<div style="text-align: center" id="container">
+    <div class="container" style="position:relative;z-index:1;top:300px">
+        <div class="row justify-content-center align-items-left" style="height:1vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                    <table style="width:100%">
+                          <tr>
+                            <th>FROM - TO</th>
+                            <th>Group</th>
+                          </tr>
+                            {% for r in rooms %}
+                          <tr>
+                            <td>{{ r.0 }}</td>
+                            <td>{{ r.1 }}</td>
+                          </tr>
+                        {% endfor %}
+</table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}<div style="text-align: center" id="container">
+    <div class="container" style="position:relative;z-index:1;top:300px">
+        <div class="row justify-content-center align-items-center" style="height:1vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <i> This room seems to be free all day. </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+
+
+
     <div style="position:relative; display:inline-block; min-width:900px;">
         <img src="/static/img/C-0.svg" alt="C building" style="margin-left: auto;margin-right: auto;display: inline;position:relative;top:2px" width="596" height="879">
         <img src="/static/img/B-0.svg" alt="B building" style="margin-left: auto;margin-right: auto;display: inline;position:relative;top:2px" height="879">
@@ -57,7 +101,7 @@
         {% endif %}
         <a alt="067C" title="067C" href="
             {% if states.Raum_067C.user == user.get_username %}
-                {% url 'delete' '067C' %}"
+                {% url 'delete' '067C' %}
         {% else %}
             {% url 'room' '067C' %}"
         {% endif %}

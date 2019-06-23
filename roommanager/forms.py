@@ -6,8 +6,8 @@ from roommanager.models import Rooms
 from roommanager.dbaccess import room_status
 
 
-def get_room_from_request(request):
-    return "Raum " + request.path[6:-1]
+def get_room_from_request(id):
+    return "Raum " + str(id)
 
 
 class DurationField(forms.ChoiceField):
