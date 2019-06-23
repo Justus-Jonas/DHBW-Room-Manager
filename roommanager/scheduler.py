@@ -10,7 +10,10 @@ startup = False
 
 
 def start():
-    if not startup and len(Rooms.objects.all()) == 0:
+    try:
+        if not startup and len(Rooms.objects.all()) == 0:
+            download_and_analyse()
+    except:
         download_and_analyse()
     getCurrentWeather()
     scheduler = BackgroundScheduler()
