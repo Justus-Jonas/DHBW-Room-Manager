@@ -127,6 +127,7 @@ def sign(request):
 def room_form(request, id):
     tz = pytz.timezone('Europe/Berlin')
     now = datetime.datetime.now(tz).replace(microsecond=0)
+    # now = datetime.datetime.strptime("2019-06-25 15:00:00", "%Y-%m-%d %H:%M:%S")
     if request.method == 'POST':
         form = RoomForm(request.POST, request=request)
         if form.is_valid():
@@ -145,7 +146,10 @@ def room_form(request, id):
     s = []
     time = (now + datetime.timedelta(hours=3))
     for r in rooms:
-        if now.time() < r.slotid.endtime or time.time() > r.slotid.starttime:
+        if (r.slotid.endtime >= now.time() and r.slotid.endtime <= time.time()) or \
+                (r.slotid.starttime >= now.time() and r.slotid.endtime <= time.time()) or \
+                (r.slotid.starttime >= now.time() and r.slotid.starttime <= time.time()) or \
+                (r.slotid.starttime <= now.time() and r.slotid.endtime >= time.time()):
             if r.slotid.group:
                 s.append([str(r.slotid), str(r.slotid.group)])
             else:
