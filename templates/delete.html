@@ -12,11 +12,13 @@
                 <div class="card">
                     <div class="card-body">
 {%if user.get_username == slot.user %}
-<h1>Delete {{ slot }}?</h1>
+<p><i><b>Delete {{ slot }}</b></i></p>
 
 <form method="POST" action="">
 {% csrf_token %}
+<p>
 Are you sure you want to delete this post?
+</p>
 <input type="submit" value="Yes"/>
 <a href="{% url 'main' %}">Cancel </a>
 </form>
