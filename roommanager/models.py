@@ -18,6 +18,6 @@ class Rooms(models.Model):
         return str(self.room) + ": " + str(self.date)
 
 class Forecast(models.Model):
-    forecastdate = models.DateField(blank=True, null=True)
-    forecasttime = models.TimeField(blank=True, null=True)
+    forecastdate = models.DateField()
+    forecasttime = models.TimeField()
     temp = models.FloatField()

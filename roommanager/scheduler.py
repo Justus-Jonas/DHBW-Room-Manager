@@ -12,7 +12,7 @@ startup = False
 def start():
     if not startup and len(Rooms.objects.all()) == 0:
         download_and_analyse()
-        getCurrentWeather()
+    getCurrentWeather()
     scheduler = BackgroundScheduler()
     """Getting the latest temperature every hour"""
     scheduler.add_job(getCurrentWeather, 'interval', hours=1)

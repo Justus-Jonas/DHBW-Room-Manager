@@ -120,6 +120,3 @@ def current_date():
     date = datetime.datetime.now(tz)
     date = date.strftime("%Y-%m-%d")
     return date;
-
-print(current_date())
-
