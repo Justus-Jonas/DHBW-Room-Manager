@@ -5,10 +5,16 @@
     {% if weather > 25.0 %}
         <p style="text-align: center">Sehr heiß. Bitte markierte Räume meiden!</p>
     {% endif %}
-{% if bookable %}
+
+
+
 <div style="text-align: center" id="container">
-    <div class="container" style="position:relative;z-index:1;top:100px">
-        <div class="row justify-content-center align-items-center" style="height:1vh">
+
+
+<div style="position:absolute;text-align:center;width:100%;z-index:100">
+{% if bookable %}
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
             <div class="col-4">
                 <div class="card">
                     <div class="card-body">
@@ -45,31 +51,30 @@
 
 
 {% if rooms %}
-<div style="text-align: center" id="container">
-    <div class="container" style="position:relative;z-index:1; top:{% if bookable %}300{% else %}10{% endif %}px">
+    <div class="container">
         <div class="row justify-content-center align-items-left" style="height:1vh">
             <div class="col-4">
                 <div class="card">
                     <div class="card-body">
-                    <table style="width:100%">
-                          <tr>
-                            <th>FROM - TO</th>
-                            <th>Group</th>
-                          </tr>
+                        <table style="width:100%">
+                            <tr>
+                                <th>FROM - TO</th>
+                                <th>Group</th>
+                            </tr>
                             {% for r in rooms %}
-                          <tr>
-                            <td>{{ r.0 }}</td>
-                            <td>{{ r.1 }}</td>
-                          </tr>
-                        {% endfor %}
-</table>
+                                <tr>
+                                    <td>{{ r.0 }}</td>
+                                    <td>{{ r.1 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-{% else %}<div style="text-align: center" id="container">
-    <div class="container" style="position:relative;z-index:1;top:300px">
+{% else %}
+    <div class="container">
         <div class="row justify-content-center align-items-center" style="height:1vh">
             <div class="col-4">
                 <div class="card">
@@ -80,8 +85,8 @@
             </div>
         </div>
     </div>
-
 {% endif %}
+</div>
 
 
 
