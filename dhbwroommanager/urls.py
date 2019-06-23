@@ -31,11 +31,11 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('sign/', sign, name='sign'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
-    path('test/', download_and_analyse, name='download_and_analyse'),
-    path('<str:room_name>/test_model/', test_model, name='test_model'),
-    path('allt', retrieve_all, name="retrieve_all"),
-    path('one', retrieve_slot_inf, name="retrieve_slot_inf"),
-    path('delete', delete_models, name="delete_models"),
-    path('current', retrieve_actual_date, name="retrieve_actual_date"),
+    #path('test/', download_and_analyse, name='download_and_analyse'),
+    #path('<str:room_name>/test_model/', test_model, name='test_model'),
+    #path('allt', retrieve_all, name="retrieve_all"),
+    #path('one', retrieve_slot_inf, name="retrieve_slot_inf"),
+    #path('delete', delete_models, name="delete_models"),
+    #path('current', retrieve_actual_date, name="retrieve_actual_date"),
 ]
 
