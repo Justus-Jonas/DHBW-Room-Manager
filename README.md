@@ -8,7 +8,7 @@
 
 **How to run this project?**
 
-1.  `pip3 install apscheduler icalendar`
+1.  `pip3 install apscheduler icalendar requests`
 2.  `python3 manage.py makemigrations`
 3.  `python3 manage.py migrate`
 4.  `python3 manage.py runserver --insecure`
