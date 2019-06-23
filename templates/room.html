@@ -14,7 +14,19 @@
 <div style="position:absolute;text-align:center;width:100%;">
     <div style="height:10px">
     </div>
-{% if bookable %}
+{% if states.out_of_service %}
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-4" style="z-index:100">
+                <div class="card">
+                    <div class="card-body">
+                        DHBW is closed, no reservations possible at this time.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% elif bookable %}
     <div class="container">
         <div class="row justify-content-center align-items-center">
             <div class="col-4" style="z-index:100">

@@ -19,7 +19,7 @@ class DurationField(forms.ChoiceField):
         super().validate(value)
         if self.request != None:
             # print("check")
-            (state, _) = room_status(get_room_from_request(self.request), value)
+            (state, _, _) = room_status(get_room_from_request(self.request), value)
             if state:
                 # print("book")
                 pass

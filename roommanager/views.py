@@ -139,7 +139,7 @@ def room_form(request, id):
             room = Rooms(slotid=slot, date=now.strftime("%Y-%m-%d"), room=get_room_from_request(id))
             room.save()
             print("add room: " + room.room + " " + str(room.date) + " " + str(room.slotid) + " " + slot.group)
-            return render(request, 'main.html', {'states': get_main_dict()})
+            return render(request, 'main.html', {'states': get_main_dict(), 'weather': get_temp()})
     else:
         form = RoomForm()
     rooms = Rooms.objects.filter(date=now.strftime("%Y-%m-%d"), room=get_room_from_request(id))
@@ -171,7 +171,7 @@ def room_form(request, id):
 
 
 def slots_delete_view(request, id):
-    (status, slot) = dbaccess.room_status("Raum " + id)
+    (status, slot, service) = dbaccess.room_status("Raum " + id)
     if status:
         return redirect('/room/' + id)
 
