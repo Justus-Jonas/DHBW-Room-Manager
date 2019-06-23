@@ -144,11 +144,13 @@ def room_form(request, id):
         form = RoomForm()
     rooms = Rooms.objects.filter(date=now.strftime("%Y-%m-%d"), room=get_room_from_request(id))
     s = []
+    time = (now + datetime.timedelta(hours=3)).time()
     for r in rooms:
-        if r.slotid.group:
-            s.append([str(r.slotid), str(r.slotid.group)])
-        else:
-            s.append([str(r.slotid), "BLOCKED"])
+        if now.time() < r.slotid.endtime < time:
+            if r.slotid.group:
+                s.append([str(r.slotid), str(r.slotid.group)])
+            else:
+                s.append([str(r.slotid), "BLOCKED"])
     return render(request, 'room.html', {'form': form, 'states': get_main_dict(),
                                          'rooms': s,
                                          'room': get_room_from_request(id),
