@@ -1,5 +1,6 @@
 # dhbw room manager
-idea: Justus-Jonas Erker
+idea: Justus-Jonas Erker 
+
 authors: Justus-jonas Erker, Dominique Lasserre, Jan Niklas Fichte
 
 **Prerequisites**
